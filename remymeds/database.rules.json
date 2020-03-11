@@ -1,0 +1,45 @@
+{
+  /* Visit https://firebase.google.com/docs/database/security to learn more about security rules. */
+  "rules": {
+    "users": {
+      "$uid": {
+        "nom" : {
+          ".read": "$uid === auth.uid",
+        	".write": "$uid === auth.uid"
+        },
+        "prenom" : {
+          ".read": "$uid === auth.uid",
+        	".write": "$uid === auth.uid"
+        },
+        "adressemail" : {
+          ".read": "$uid === auth.uid",
+        	".write": "$uid === auth.uid"
+        },
+        "mdp" : {
+          ".read": "$uid === auth.uid",
+        	".write": "$uid === auth.uid"
+        },
+        "ordonnance" : {
+          "medicament" : {
+            "nommed" : {
+              ".read": "$uid === auth.uid",
+        			".write": "$uid === auth.uid"
+            },
+            "troublemed" : {
+              ".read": "$uid === auth.uid",
+        			".write": "$uid === auth.uid"
+            },
+            "posologie" : {
+              ".read": "$uid === auth.uid",
+        			".write": "$uid === auth.uid"
+            },
+            "design" : {
+              ".read": "$uid === auth.uid",
+        			".write": "$uid === auth.uid"
+            }
+          }
+        }
+      }
+    }
+  }
+}
