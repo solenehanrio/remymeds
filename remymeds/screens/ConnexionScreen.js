@@ -38,7 +38,8 @@ class ConnexionScreen extends React.Component {
         source={require("../includes/logo_petit_V1.png")}
       ></Image>
     ),
-    headerTintColor: "white"
+    headerTintColor: "white",
+    headerShown: true
   };
 
   constructor(props) {
@@ -65,15 +66,17 @@ class ConnexionScreen extends React.Component {
     }
   }
   _deconnexion() {
-    firebase
-      .auth()
-      .signOut()
-      .then(function() {
-        // Sign-out successful.
-      })
-      .catch(function(error) {
-        // An error happened.
-      });
+    if (firebase.auth().currentUser !== null) {
+      firebase
+        .auth()
+        .signOut()
+        .then(function() {
+          // Sign-out successful.
+        })
+        .catch(function(error) {
+          // An error happened.
+        });
+    }
   }
 
   render() {
@@ -128,10 +131,19 @@ class ConnexionScreen extends React.Component {
         <TouchableOpacity
           style={styles.touchableOpacityStyle}
           onPress={() => {
-            this._deconnexion(), console.log(firebase.auth().currentUser.uid);
+            this._deconnexion();
           }}
         >
           <Bouton texte={"Se déconnecter"}></Bouton>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.touchableOpacityStyle}
+          onPress={() => {
+            this.props.navigation.navigate("Accueil");
+          }}
+        >
+          <Bouton texte={"Accès rapide"}></Bouton>
         </TouchableOpacity>
       </View>
     );

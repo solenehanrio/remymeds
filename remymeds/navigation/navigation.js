@@ -8,15 +8,41 @@ import ProfilScreen from "../screens/ProfilScreen.js";
 import DeconnexionScreen from "../screens/DeconnexionScreen.js";
 import ConnexionScreen from "../screens/ConnexionScreen.js";
 import InscriptionScreen from "../screens/InscriptionScreen.js";
+import MedmoryScreen from "../screens/MedmoryScreen.js";
+import InformationMedicamentScreen from "../screens/InformationMedicamentScreen.js";
+import ChoixFormeScreen from "../screens/ChoixFormeScreen.js";
+import ChoixDesignScreen from "../screens/ChoixDesignScreen.js";
+import CreationMedicamentScreen from "../screens/CreationMedicamentScreen.js";
 import { createBottomTabNavigator } from "react-navigation-tabs";
 import { createMaterialTopTabNavigator } from "react-navigation-tabs";
 
-const HomeStack = createStackNavigator({
-  Accueil: HomeScreen,
-  Ordonnance: OrdonnanceScreen,
-  Profil: ProfilScreen,
-  Deconnexion: DeconnexionScreen
-});
+const MedCreatorStack = createStackNavigator(
+  {
+    ChoixForme: ChoixFormeScreen,
+    ChoixDesign: ChoixDesignScreen,
+    InformationMedicament: InformationMedicamentScreen
+  },
+  { headerMode: "none" }
+);
+
+const OrdonnanceStack = createStackNavigator(
+  {
+    Ordonnance: OrdonnanceScreen,
+    CreationMedicament: MedCreatorStack
+  },
+  { headerMode: "none" }
+);
+
+const HomeStack = createStackNavigator(
+  {
+    Accueil: HomeScreen,
+    Ordonnance: OrdonnanceStack,
+    Profil: ProfilScreen,
+    Deconnexion: DeconnexionScreen,
+    Medmory: MedmoryScreen
+  },
+  { headerMode: "none" }
+);
 
 const ConnexionStack = createStackNavigator(
   {

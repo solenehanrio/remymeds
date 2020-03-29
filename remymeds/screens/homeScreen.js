@@ -12,6 +12,7 @@ import * as firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/database";
 import { Value } from "react-native-reanimated";
+import Header from "../components/header.js";
 
 if (!firebase.apps.length) {
   firebase.initializeApp({
@@ -27,22 +28,8 @@ if (!firebase.apps.length) {
 }
 
 class HomeScreen extends React.Component {
-  static navigationOptions = {
-    headerMode: "float",
-    title: "Accueil",
-    headerTitleStyle: { fontWeight: "bold" },
-    headerStyle: { justifyContent: "center", backgroundColor: "#CC3B95" },
-    headerLeft: (
-      <Image
-        style={{ width: 40, resizeMode: "contain" }}
-        source={require("../includes/logo_petit_V1.png")}
-      ></Image>
-    ),
-    headerTintColor: "white"
-  };
   constructor(props) {
     super(props);
-    prenom = "";
   }
 
   _afficherPrenom() {
@@ -65,7 +52,6 @@ class HomeScreen extends React.Component {
     }
   }
   render() {
-    this.prenom = this._afficherPrenom;
     console.log(firebase.auth().currentUser.uid);
     return (
       <View
@@ -74,6 +60,12 @@ class HomeScreen extends React.Component {
           marginBottom: 10
         }}
       >
+        <Header
+          optionBoutonGauche={1}
+          optionBoutonDroit={2}
+          titrePage={"ACCUEIL"}
+          nav={this.props.navigation}
+        ></Header>
         <TouchableOpacity
           style={styles.touchableOpacityStyle}
           onPress={() => {
@@ -114,7 +106,7 @@ class HomeScreen extends React.Component {
           <TouchableOpacity
             style={styles.touchableOpacityStyle}
             onPress={() => {
-              this._deconnexion(), console.log(firebase.auth().currentUser.uid);
+              this.props.navigation.navigate("Medmory");
             }}
           >
             <Bouton texte={"Jouer au \nMed'Mory"}></Bouton>
@@ -122,7 +114,7 @@ class HomeScreen extends React.Component {
           <TouchableOpacity
             style={styles.touchableOpacityStyle}
             onPress={() => {
-              this._deconnexion(), console.log(firebase.auth().currentUser.uid);
+              this.props.navigation.navigate("Ordonnance");
             }}
           >
             <Bouton texte={"Jouer au \n Posolitaire"}></Bouton>

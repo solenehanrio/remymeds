@@ -9,10 +9,12 @@ import {
 } from "react-native";
 import Bouton from "../components/boutons";
 import CarteRecto from "../components/carteRecto";
+import CarteVerso from "../components/carteVerso";
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/database";
 import { Value } from "react-native-reanimated";
+import Header from "../components/header.js";
 
 if (!firebase.apps.length) {
   firebase.initializeApp({
@@ -28,16 +30,39 @@ if (!firebase.apps.length) {
 }
 
 class OrdonnanceScreen extends React.Component {
-  static navigationOptions = {
-    title: "Ordonnance",
-    headerStyle: { backgroundColor: "#CC3B95" },
-    headerTintColor: "white"
-  };
-
   render() {
     return (
-      <View>
-        <Text>"Coucou je suis le OrdonnanceScreen</Text>
+      <View style={{ flex: 1 }}>
+        <Header
+          optionBoutonGauche={3}
+          optionBoutonDroit={2}
+          titrePage={"ORDONNANCE"}
+        ></Header>
+        <View style={{ flexDirection: "row" }}>
+          <CarteRecto
+            hauteurCarte={300}
+            sourceIm={"ov"}
+            nomMedicament={"Clampse"}
+          ></CarteRecto>
+
+          <CarteVerso
+            hauteurCarte={300}
+            sourceIm={"ov"}
+            nomMedicament={"Clampse"}
+            trouble={"Micose"}
+            posoMatin={""}
+            posoMidi={""}
+            posoSoir={"1"}
+          ></CarteVerso>
+        </View>
+        <TouchableOpacity
+          style={styles.touchableOpacityStyle}
+          onPress={() => {
+            this.props.navigation.navigate("CreationMedicament");
+          }}
+        >
+          <Bouton texte={"Créer un nouveau \n médicament"}></Bouton>
+        </TouchableOpacity>
       </View>
     );
   }

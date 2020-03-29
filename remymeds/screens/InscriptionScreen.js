@@ -30,19 +30,6 @@ if (!firebase.apps.length) {
 var database = firebase.database();
 
 class InscriptionScreen extends React.Component {
-  static navigationOptions = {
-    title: "Création de compte",
-    headerTitleStyle: { fontWeight: "bold" },
-    headerStyle: { justifyContent: "center", backgroundColor: "#CC3B95" },
-    headerLeft: (
-      <Image
-        style={{ width: 40, resizeMode: "contain" }}
-        source={require("../includes/logo_petit_V1.png")}
-      ></Image>
-    ),
-    headerTintColor: "white"
-  };
-
   constructor(props) {
     super(props);
     email = "";
