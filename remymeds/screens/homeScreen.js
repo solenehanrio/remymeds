@@ -11,7 +11,6 @@ import Bouton from "../components/boutons";
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/database";
-import { Value } from "react-native-reanimated";
 import Header from "../components/header.js";
 
 if (!firebase.apps.length) {
@@ -37,7 +36,7 @@ class HomeScreen extends React.Component {
       var userId = firebase.auth().currentUser.uid;
       console.log(userId);
       var ref = firebase.database().ref("/users/" + userId + "/prenom/");
-      var prenom = "";
+      let prenom = "";
       ref.on(
         "value",
         function(snapshot) {
@@ -45,7 +44,7 @@ class HomeScreen extends React.Component {
         },
         function(error) {}
       );
-      return prenom;
+      console.log(prenom);
     } else {
       console.log(firebase.auth().currentUser.uid);
       return "";
@@ -53,6 +52,7 @@ class HomeScreen extends React.Component {
   }
   render() {
     console.log(firebase.auth().currentUser.uid);
+    this._afficherPrenom();
     return (
       <View
         style={{

@@ -13,6 +13,7 @@ import "firebase/database";
 import { Value } from "react-native-reanimated";
 import AffichageImage from "../components/affichageImage.js";
 import tabImages from "../helpers/lienImages.js";
+import Bouton from "../components/boutons";
 
 if (!firebase.apps.length) {
   firebase.initializeApp({
@@ -34,7 +35,10 @@ class ChoixFormeScreen extends React.Component {
   }
 
   _affichagePersonnalise() {
-    if (this.state.boutonActivé == "") {
+    if (
+      this.state.boutonActivé == "" ||
+      this.props.navigation.state.params.retour == "vrai"
+    ) {
       return this._premierAffichage();
     } else if (this.state.boutonActivé == "formeOrale") {
       return this._affichageFO();
@@ -51,6 +55,7 @@ class ChoixFormeScreen extends React.Component {
     }
   }
   _premierAffichage() {
+    this.props.navigation.state.params.retour = "faux";
     return (
       <View>
         <View style={{ flexDirection: "row" }}>
@@ -146,6 +151,14 @@ class ChoixFormeScreen extends React.Component {
             <Text style={styles.textStyle}> Forme Injectee </Text>
           </View>
         </View>
+        <TouchableOpacity
+          style={{ marginTop: 50 }}
+          onPress={() => {
+            this.props.navigation.goBack(null);
+          }}
+        >
+          <Bouton texte={"Retour"}></Bouton>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -252,6 +265,14 @@ class ChoixFormeScreen extends React.Component {
             <Text style={styles.textStyle}>Suspension {"\n"} buvable</Text>
           </View>
         </View>
+        <TouchableOpacity
+          style={{ marginTop: 50 }}
+          onPress={() => {
+            this.setState({ boutonActivé: "" });
+          }}
+        >
+          <Bouton texte={"Retour"}></Bouton>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -326,6 +347,14 @@ class ChoixFormeScreen extends React.Component {
             <Text style={styles.textStyle}> Piqure </Text>
           </View>
         </View>
+        <TouchableOpacity
+          style={{ marginTop: 50 }}
+          onPress={() => {
+            this.setState({ boutonActivé: "" });
+          }}
+        >
+          <Bouton texte={"Retour"}></Bouton>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -366,6 +395,14 @@ class ChoixFormeScreen extends React.Component {
             <Text style={styles.textStyle}> Patch </Text>
           </View>
         </View>
+        <TouchableOpacity
+          style={{ marginTop: 50 }}
+          onPress={() => {
+            this.setState({ boutonActivé: "" });
+          }}
+        >
+          <Bouton texte={"Retour"}></Bouton>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -406,13 +443,25 @@ class ChoixFormeScreen extends React.Component {
             <Text style={styles.textStyle}> Patch </Text>
           </View>
         </View>
+        <TouchableOpacity
+          style={{ marginTop: 50 }}
+          onPress={() => {
+            this.setState({ boutonActivé: "" });
+          }}
+        >
+          <Bouton texte={"Retour"}></Bouton>
+        </TouchableOpacity>
       </View>
     );
   }
 
   render() {
     return (
-      <View style={{ alignItems: "center", flex: 1 }}>
+      <View style={{ alignItems: "center", flex: 1, justifyContent: "center" }}>
+        <Image
+          style={{ marginBottom: 100 }}
+          source={require("../includes/logo_petit_V1.png")}
+        ></Image>
         {this._affichagePersonnalise()}
       </View>
     );

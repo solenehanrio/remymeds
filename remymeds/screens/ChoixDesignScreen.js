@@ -285,41 +285,9 @@ class ChoixDesignScreen extends React.Component {
         </View>
       );
     } else if (this.props.navigation.state.params.forme == "suppositoire") {
-      return (
-        <TouchableOpacity
-          onPress={() => {
-            this.props.navigation.navigate("InformationMedicamentScreen", {
-              idMed: "sup"
-            });
-          }}
-        >
-          <Bouton texte={"Valider"}></Bouton>
-        </TouchableOpacity>
-      );
     } else if (this.props.navigation.state.params.forme == "ovule") {
-      return (
-        <TouchableOpacity
-          onPress={() => {
-            this.props.navigation.navigate("InformationMedicamentScreen", {
-              idMed: "ov"
-            });
-          }}
-        >
-          <Bouton texte={"Valider"}></Bouton>
-        </TouchableOpacity>
-      );
     } else if (this.props.navigation.state.params.forme == "piqure") {
-      return (
-        <TouchableOpacity
-          onPress={() => {
-            this.props.navigation.navigate("InformationMedicamentScreen", {
-              idMed: "ser"
-            });
-          }}
-        >
-          <Bouton texte={"Valider"}></Bouton>
-        </TouchableOpacity>
-      );
+    } else if (this.props.navigation.state.params.forme == "patch") {
     } else {
       return (
         <View>
@@ -453,77 +421,140 @@ class ChoixDesignScreen extends React.Component {
       element => element.forme == this.props.navigation.state.params.forme
     );
     idImage = "";
+    if (
+      this.props.navigation.state.params.forme != "suppositoire" &&
+      this.props.navigation.state.params.forme != "ovule" &&
+      this.props.navigation.state.params.forme != "piqure" &&
+      this.props.navigation.state.params.forme != "patch"
+    ) {
+      if (this.state.couleurHaut == "" && this.state.couleurBas == "") {
+        medCouleurHaut = medForme.filter(
+          element => element.couleur1 == "blanc"
+        );
 
-    if (this.state.couleurHaut == "" && this.state.couleurBas == "") {
-      medCouleurHaut = medForme.filter(element => element.couleur1 == "blanc");
-
-      if (
-        this.props.navigation.state.params.forme == "suspensionBuvable" ||
-        this.props.navigation.state.params.forme == "gellule"
-      ) {
-        medCouleurBas = medCouleurHaut.filter(
-          element => element.couleur2 == "blanc"
-        );
-        idImage = medCouleurBas[0].id;
-        return <AffichageImage sourceIm={idImage}></AffichageImage>;
-      } else {
-        idImage = medCouleurHaut[0].id;
-        return <AffichageImage sourceIm={idImage}></AffichageImage>;
-      }
-    } else if (this.state.couleurBas == "" && this.state.couleurHaut !== "") {
-      medCouleurHaut = medForme.filter(
-        element => element.couleur1 == this.state.couleurHaut
-      );
-      if (
-        this.props.navigation.state.params.forme == "suspensionBuvable " ||
-        this.props.navigation.state.params.forme == "gellule"
-      ) {
-        idImage = medCouleurHaut.find(element => element.couleur2 == "blanc")
-          .id;
-        return <AffichageImage sourceIm={idImage}></AffichageImage>;
-      } else {
-        idImage = medCouleurHaut[0].id;
-        return <AffichageImage sourceIm={idImage}></AffichageImage>;
-      }
-    } else if (this.state.couleurBas !== "") {
-      if (this.state.couleurHaut == "") {
-        medCouleurBas = medForme.filter(
-          element => element.couleur2 == this.state.couleurBas
-        );
-        idImage = medCouleurBas.find(element => element.couleur1 == "blanc").id;
-        return <AffichageImage sourceIm={idImage}></AffichageImage>;
-      } else if (this.state.couleurHaut !== "") {
-        medCouleurBas = medForme.filter(
-          element => element.couleur2 == this.state.couleurBas
-        );
-        medCouleurHaut = medCouleurBas.filter(
+        if (
+          this.props.navigation.state.params.forme == "suspensionBuvable" ||
+          this.props.navigation.state.params.forme == "gellule"
+        ) {
+          medCouleurBas = medCouleurHaut.filter(
+            element => element.couleur2 == "blanc"
+          );
+          idImage = medCouleurBas[0].id;
+          return <AffichageImage sourceIm={idImage}></AffichageImage>;
+        } else {
+          idImage = medCouleurHaut[0].id;
+          return <AffichageImage sourceIm={idImage}></AffichageImage>;
+        }
+      } else if (this.state.couleurBas == "" && this.state.couleurHaut !== "") {
+        medCouleurHaut = medForme.filter(
           element => element.couleur1 == this.state.couleurHaut
         );
-        idImage = medCouleurHaut[0].id;
-        return <AffichageImage sourceIm={idImage}></AffichageImage>;
+        if (
+          this.props.navigation.state.params.forme == "suspensionBuvable " ||
+          this.props.navigation.state.params.forme == "gellule"
+        ) {
+          idImage = medCouleurHaut.find(element => element.couleur2 == "blanc")
+            .id;
+          return <AffichageImage sourceIm={idImage}></AffichageImage>;
+        } else {
+          idImage = medCouleurHaut[0].id;
+          return <AffichageImage sourceIm={idImage}></AffichageImage>;
+        }
+      } else if (this.state.couleurBas !== "") {
+        if (this.state.couleurHaut == "") {
+          medCouleurBas = medForme.filter(
+            element => element.couleur2 == this.state.couleurBas
+          );
+          idImage = medCouleurBas.find(element => element.couleur1 == "blanc")
+            .id;
+          return <AffichageImage sourceIm={idImage}></AffichageImage>;
+        } else if (this.state.couleurHaut !== "") {
+          medCouleurBas = medForme.filter(
+            element => element.couleur2 == this.state.couleurBas
+          );
+          medCouleurHaut = medCouleurBas.filter(
+            element => element.couleur1 == this.state.couleurHaut
+          );
+          idImage = medCouleurHaut[0].id;
+          return <AffichageImage sourceIm={idImage}></AffichageImage>;
+        }
       }
+    } else if (this.props.navigation.state.params.forme == "suppositoire") {
+      console.log("ok");
+      return <AffichageImage sourceIm="sup"></AffichageImage>;
+    } else if (this.props.navigation.state.params.forme == "ovule") {
+      return <AffichageImage sourceIm="ov"></AffichageImage>;
+    } else if (this.props.navigation.state.params.forme == "piqure") {
+      return <AffichageImage sourceIm="ser"></AffichageImage>;
+    } else if (this.props.navigation.state.params.forme == "patch") {
+      return <AffichageImage sourceIm="pat"></AffichageImage>;
     }
   }
 
   _validationIdMed() {
-    medForme = tabImages.filter(
-      element => element.forme == this.props.navigation.state.params.forme
-    );
-    console.log(medForme);
-    medCouleurHaut = medForme.filter(
-      element => element.couleur1 == this.state.couleurHaut
-    );
-    console.log(medCouleurHaut);
-    medCouleurBas = medCouleurHaut.filter(
-      element => element.couleur2 == this.state.couleurBas
-    );
-    console.log(medCouleurBas);
-    idImage = medCouleurBas[0].id;
-    console.log(idImage);
-    this.setState({ idMedicament: idImage });
-    console.log(this.state.idMedicament);
+    if (
+      this.props.navigation.state.params.forme !== "suppositoire" &&
+      this.props.navigation.state.params.forme !== "ovule" &&
+      this.props.navigation.state.params.forme !== "piqure" &&
+      this.props.navigation.state.params.forme !== "patch"
+    ) {
+      medForme = [];
+      medCouleurHaut = [];
+      medCouleurBas = [];
+      if (this.state.couleurHaut == "") {
+        console.log("couleur haut rien");
+        medForme = tabImages.filter(
+          element => element.forme == this.props.navigation.state.params.forme
+        );
+        medCouleurHaut = medForme.filter(
+          element => element.couleur1 == "blanc"
+        );
+      } else {
+        medForme = tabImages.filter(
+          element => element.forme == this.props.navigation.state.params.forme
+        );
+        medCouleurHaut = medForme.filter(
+          element => element.couleur1 == this.state.couleurHaut
+        );
+      }
+      if (
+        this.props.navigation.state.params.forme == "gellule" ||
+        this.props.navigation.state.params.forme == "suspensionBuvable"
+      ) {
+        console.log("gellule ou sachet");
+        if (this.state.couleurBas == "") {
+          console.log("couleur bas rien");
+          medCouleurBas = medCouleurHaut.filter(
+            element => element.couleur2 == "blanc"
+          );
+        } else {
+          console.log("couleur bas quelque chose");
+          medCouleurBas = medCouleurHaut.filter(
+            element => element.couleur2 == this.state.couleurBas
+          );
+        }
+      } else {
+        console.log("pas gellule ou sachet");
+        medCouleurBas = medCouleurHaut.filter(
+          element => element.couleur2 == this.state.couleurBas
+        );
+      }
 
-    this.props.navigation.navigate("InformationMedicament", { idMed: idImage });
+      idImage = medCouleurBas[0].id;
+      this.setState({ idMedicament: idImage });
+
+      this.props.navigation.navigate("InformationMedicament", {
+        idMed: idImage
+      });
+    } else if (this.props.navigation.state.params.forme == "suppositoire") {
+      this.props.navigation.navigate("InformationMedicament", { idMed: "sup" });
+    } else if (this.props.navigation.state.params.forme == "ovule") {
+      this.props.navigation.navigate("InformationMedicament", { idMed: "ov" });
+    } else if (this.props.navigation.state.params.forme == "piqure") {
+      this.props.navigation.navigate("InformationMedicament", { idMed: "ser" });
+    } else if (this.props.navigation.state.params.forme == "patch") {
+      this.props.navigation.navigate("InformationMedicament", { idMed: "pat" });
+    }
   }
 
   render() {
@@ -549,6 +580,16 @@ class ChoixDesignScreen extends React.Component {
             <Bouton texte={"Valider"}></Bouton>
           </TouchableOpacity>
         </View>
+        <TouchableOpacity
+          style={{ marginTop: 50 }}
+          onPress={() => {
+            this.props.navigation.navigate("ChoixForme", {
+              retour: "vrai"
+            });
+          }}
+        >
+          <Bouton texte={"Retour"}></Bouton>
+        </TouchableOpacity>
       </View>
     );
   }

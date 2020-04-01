@@ -58,7 +58,9 @@ class OrdonnanceScreen extends React.Component {
         <TouchableOpacity
           style={styles.touchableOpacityStyle}
           onPress={() => {
-            this.props.navigation.navigate("CreationMedicament");
+            this.props.navigation.navigate("CreationMedicament", {
+              retour: "faux"
+            });
           }}
         >
           <Bouton texte={"Créer un nouveau \n médicament"}></Bouton>

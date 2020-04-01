@@ -12,15 +12,14 @@ import MedmoryScreen from "../screens/MedmoryScreen.js";
 import InformationMedicamentScreen from "../screens/InformationMedicamentScreen.js";
 import ChoixFormeScreen from "../screens/ChoixFormeScreen.js";
 import ChoixDesignScreen from "../screens/ChoixDesignScreen.js";
-import CreationMedicamentScreen from "../screens/CreationMedicamentScreen.js";
-import { createBottomTabNavigator } from "react-navigation-tabs";
-import { createMaterialTopTabNavigator } from "react-navigation-tabs";
+import ResultatCarteScreen from "../screens/ResultatCarteScreen.js";
 
 const MedCreatorStack = createStackNavigator(
   {
     ChoixForme: ChoixFormeScreen,
     ChoixDesign: ChoixDesignScreen,
-    InformationMedicament: InformationMedicamentScreen
+    InformationMedicament: InformationMedicamentScreen,
+    ResultatCarte: ResultatCarteScreen
   },
   { headerMode: "none" }
 );
