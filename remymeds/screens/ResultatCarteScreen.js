@@ -5,7 +5,7 @@ import {
   View,
   Image,
   Dimensions,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import Bouton from "../components/boutons";
 import CarteRecto from "../components/carteRecto";
@@ -27,7 +27,7 @@ if (!firebase.apps.length) {
     storageBucket: "remymeds.appspot.com",
     messagingSenderId: "467972555435",
     appId: "1:467972555435:web:89042b2ccd7a5ec374adee",
-    measurementId: "G-Z6SZ5VZGX8"
+    measurementId: "G-Z6SZ5VZGX8",
   });
 }
 var database = firebase.database();
@@ -37,14 +37,25 @@ class ResultatCarteScreen extends React.Component {
     super(props);
     this.state = {
       idMedicament: "",
-      troubleMed: "",
+      troubleMedicament: "",
       posologieMatin: "",
       posologieMidi: "",
-      posologieSoir: ""
+      posologieSoir: "",
     };
   }
 
-  _recupererInfos() {
+  _retourRemove() {
+    var userId = firebase.auth().currentUser.uid;
+    console.log(userId);
+    let nomMed = this.props.navigation.state.params.nom;
+
+    firebase
+      .database()
+      .ref("/users/" + userId + "/medicament/" + nomMed)
+      .remove();
+  }
+
+  _recupererId() {
     var userId = firebase.auth().currentUser.uid;
     console.log(userId);
     let nomMed = this.props.navigation.state.params.nom;
@@ -55,11 +66,19 @@ class ResultatCarteScreen extends React.Component {
     let idDesignMed = "";
     refId.on(
       "value",
-      function(snapshot) {
+      function (snapshot) {
         idDesignMed = snapshot.val();
       },
-      function(error) {}
+      function (error) {}
     );
+
+    return idDesignMed;
+  }
+
+  _recupererTrouble() {
+    var userId = firebase.auth().currentUser.uid;
+    console.log(userId);
+    let nomMed = this.props.navigation.state.params.nom;
 
     var refTrouble = firebase
       .database()
@@ -67,11 +86,19 @@ class ResultatCarteScreen extends React.Component {
     let troubleMed = "";
     refTrouble.on(
       "value",
-      function(snapshot) {
+      function (snapshot) {
         troubleMed = snapshot.val();
       },
-      function(error) {}
+      function (error) {}
     );
+
+    return troubleMed;
+  }
+
+  _recupererPosoMatin() {
+    var userId = firebase.auth().currentUser.uid;
+    console.log(userId);
+    let nomMed = this.props.navigation.state.params.nom;
 
     var refPosoMatin = firebase
       .database()
@@ -79,34 +106,90 @@ class ResultatCarteScreen extends React.Component {
     let posoMatinMed = "";
     refPosoMatin.on(
       "value",
-      function(snapshot) {
+      function (snapshot) {
         posoMatinMed = snapshot.val();
       },
-      function(error) {}
+      function (error) {}
     );
+    return posoMatinMed;
+  }
 
-    this.setState({});
+  _recupererPosoMidi() {
+    var userId = firebase.auth().currentUser.uid;
+    console.log(userId);
+    let nomMed = this.props.navigation.state.params.nom;
+
+    var refPosoMidi = firebase
+      .database()
+      .ref("/users/" + userId + "/medicament/" + nomMed + "/posoMidi/");
+    let posoMidiMed = "";
+    refPosoMidi.on(
+      "value",
+      function (snapshot) {
+        posoMidiMed = snapshot.val();
+      },
+      function (error) {}
+    );
+    return posoMidiMed;
+  }
+  _recupererPosoSoir() {
+    var userId = firebase.auth().currentUser.uid;
+    console.log(userId);
+    let nomMed = this.props.navigation.state.params.nom;
+
+    var refPosoSoir = firebase
+      .database()
+      .ref("/users/" + userId + "/medicament/" + nomMed + "/posoSoir/");
+    let posoSoirMed = "";
+    refPosoSoir.on(
+      "value",
+      function (snapshot) {
+        posoSoirMed = snapshot.val();
+      },
+      function (error) {}
+    );
+    return posoSoirMed;
   }
 
   render() {
-    this._recupererInfos();
     return (
       <View style={styles.container}>
+        {console.log(this.state.idMedicament, "coucou", this._recupererId())}
         <CarteRecto
-          hauteurCarte={300}
-          sourceIm={"ov"}
-          nomMedicament={"Clampse"}
+          hauteurCarte={500}
+          sourceIm={this._recupererId()}
+          nomMedicament={this.props.navigation.state.params.nom}
         ></CarteRecto>
 
         <CarteVerso
-          hauteurCarte={300}
-          sourceIm={"ov"}
-          nomMedicament={"Clampse"}
-          trouble={"Micose"}
-          posoMatin={""}
-          posoMidi={""}
-          posoSoir={"1"}
+          hauteurCarte={500}
+          sourceIm={this._recupererId()}
+          nomMedicament={this.props.navigation.state.params.nom}
+          trouble={this._recupererTrouble()}
+          posoMatin={this._recupererPosoMatin()}
+          posoMidi={this._recupererPosoMidi()}
+          posoSoir={this._recupererPosoSoir()}
         ></CarteVerso>
+
+        <View style={{ flexDirection: "row" }}>
+          <TouchableOpacity
+            style={styles.touchableOpacityStyle}
+            onPress={() => {
+              this.props.navigation.navigate("Ordonnance");
+            }}
+          >
+            <Bouton texte={"Valider"}></Bouton>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.touchableOpacityStyle}
+            onPress={() => {
+              this._retourRemove(),
+                this.props.navigation.navigate("InformationMedicament");
+            }}
+          >
+            <Bouton texte={"Retour"}></Bouton>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -117,7 +200,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   tuileStyle: {
     width: "90%",
@@ -126,12 +209,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 20,
-    borderRadius: 25
+    borderRadius: 25,
   },
   textStyle: {
     fontSize: 40,
     color: "#30696D",
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   textInputStyle: {
     backgroundColor: "white",
@@ -141,7 +224,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 20,
     shadowColor: "grey",
-    elevation: 10
+    elevation: 10,
   },
   numberInputStyle: {
     backgroundColor: "white",
@@ -151,7 +234,7 @@ const styles = StyleSheet.create({
     elevation: 10,
     borderRadius: 20,
     marginLeft: 10,
-    marginRight: 10
+    marginRight: 10,
   },
   pinkRoundStyle: {
     backgroundColor: "#CC3B95",
@@ -161,8 +244,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginLeft: 10,
-    marginRight: 10
-  }
+    marginRight: 10,
+  },
 });
 
 export default ResultatCarteScreen;

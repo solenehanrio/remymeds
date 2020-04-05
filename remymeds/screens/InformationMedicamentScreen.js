@@ -5,7 +5,7 @@ import {
   View,
   Image,
   Dimensions,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import Bouton from "../components/boutons";
 import CarteRecto from "../components/carteRecto";
@@ -27,7 +27,7 @@ if (!firebase.apps.length) {
     storageBucket: "remymeds.appspot.com",
     messagingSenderId: "467972555435",
     appId: "1:467972555435:web:89042b2ccd7a5ec374adee",
-    measurementId: "G-Z6SZ5VZGX8"
+    measurementId: "G-Z6SZ5VZGX8",
   });
 }
 var database = firebase.database();
@@ -41,10 +41,10 @@ class InformationMedicamentScreen extends React.Component {
       numberMatin: 0,
       numberMidi: 0,
       numberSoir: 0,
-      horaires: new Array()
+      horaires: new Array(),
     };
   }
-  _calculNombre() {}
+
   _ajoutMedicament(nom, t) {
     if (firebase.auth().currentUser !== null) {
       var userId = firebase.auth().currentUser.uid;
@@ -58,12 +58,12 @@ class InformationMedicamentScreen extends React.Component {
           posoMatin: this.state.numberMatin,
           posoMidi: this.state.numberMidi,
           posoSoir: this.state.numberSoir,
-          posoHoraire: this.state.horaires
+          posoHoraire: this.state.horaires,
         });
     }
   }
   _horaire(h) {
-    if (this.state.horaires.find(element => element == h) != undefined) {
+    if (this.state.horaires.find((element) => element == h) != undefined) {
       let indexHoraire = this.state.horaires.indexOf(h);
       this.state.horaires.splice(indexHoraire, 1);
       this.setState({ horaires: this.state.horaires });
@@ -74,7 +74,7 @@ class InformationMedicamentScreen extends React.Component {
     }
   }
   _checkBoxStyle(item) {
-    if (this.state.horaires.find(element => element == item) != undefined) {
+    if (this.state.horaires.find((element) => element == item) != undefined) {
       return {
         backgroundColor: "black",
         borderWidth: 1,
@@ -85,7 +85,7 @@ class InformationMedicamentScreen extends React.Component {
         marginRight: 10,
         marginLeft: 10,
         shadowColor: "grey",
-        elevation: 10
+        elevation: 10,
       };
     } else {
       return {
@@ -98,13 +98,13 @@ class InformationMedicamentScreen extends React.Component {
         marginRight: 10,
         marginLeft: 10,
         shadowColor: "grey",
-        elevation: 10
+        elevation: 10,
       };
     }
   }
   _displayCheckBox1() {
     const horairesTab = ["4h", "5h", "6h", "7h", "8h", "9h", "10h", "11h"];
-    const row = horairesTab.map(item => (
+    const row = horairesTab.map((item) => (
       <View style={{ justifyContent: "center", alignItems: "center" }}>
         <TouchableOpacity
           style={this._checkBoxStyle(item)}
@@ -127,9 +127,9 @@ class InformationMedicamentScreen extends React.Component {
       "16h",
       "17h",
       "18h",
-      "19h"
+      "19h",
     ];
-    const row = horairesTab.map(item => (
+    const row = horairesTab.map((item) => (
       <View style={{ justifyContent: "center", alignItems: "center" }}>
         <TouchableOpacity
           style={this._checkBoxStyle(item)}
@@ -145,7 +145,7 @@ class InformationMedicamentScreen extends React.Component {
 
   _displayCheckBox3() {
     const horairesTab = ["20h", "21h", "22h", "23h", "00h", "1h", "2h", "3h"];
-    const row = horairesTab.map(item => (
+    const row = horairesTab.map((item) => (
       <View style={{ justifyContent: "center", alignItems: "center" }}>
         <TouchableOpacity
           style={this._checkBoxStyle(item)}
@@ -170,7 +170,7 @@ class InformationMedicamentScreen extends React.Component {
           <Text style={styles.textStyle}>Nom du medicament</Text>
           <TextInput
             style={styles.textInputStyle}
-            onEndEditing={text =>
+            onEndEditing={(text) =>
               this.setState({ nomMed: text.nativeEvent.text })
             }
           ></TextInput>
@@ -179,7 +179,7 @@ class InformationMedicamentScreen extends React.Component {
           <Text style={styles.textStyle}>Trouble associé</Text>
           <TextInput
             style={styles.textInputStyle}
-            onEndEditing={text =>
+            onEndEditing={(text) =>
               this.setState({ troubleMed: text.nativeEvent.text })
             }
           ></TextInput>
@@ -189,7 +189,7 @@ class InformationMedicamentScreen extends React.Component {
             fontSize: 30,
             fontStyle: "italic",
             color: "#540039",
-            textAlign: "center"
+            textAlign: "center",
           }}
         >
           Entrez le nombre de cachets par prises et cochez les horaires de prise
@@ -203,7 +203,7 @@ class InformationMedicamentScreen extends React.Component {
           </View>
           <TextInput
             style={styles.numberInputStyle}
-            onEndEditing={text =>
+            onEndEditing={(text) =>
               this.setState({ numberMatin: text.nativeEvent.text })
             }
           ></TextInput>
@@ -211,7 +211,7 @@ class InformationMedicamentScreen extends React.Component {
             style={{
               flexDirection: "row",
               justifyContent: "center",
-              alignItems: "center"
+              alignItems: "center",
             }}
           >
             {this._displayCheckBox1()}
@@ -226,7 +226,7 @@ class InformationMedicamentScreen extends React.Component {
           </View>
           <TextInput
             style={styles.numberInputStyle}
-            onEndEditing={text =>
+            onEndEditing={(text) =>
               this.setState({ numberMidi: text.nativeEvent.text })
             }
           ></TextInput>
@@ -234,7 +234,7 @@ class InformationMedicamentScreen extends React.Component {
             style={{
               flexDirection: "row",
               justifyContent: "center",
-              alignItems: "center"
+              alignItems: "center",
             }}
           >
             {this._displayCheckBox2()}
@@ -249,7 +249,7 @@ class InformationMedicamentScreen extends React.Component {
           </View>
           <TextInput
             style={styles.numberInputStyle}
-            onEndEditing={text =>
+            onEndEditing={(text) =>
               this.setState({ numberSoir: text.nativeEvent.text })
             }
           ></TextInput>
@@ -257,7 +257,7 @@ class InformationMedicamentScreen extends React.Component {
             style={{
               flexDirection: "row",
               justifyContent: "center",
-              alignItems: "center"
+              alignItems: "center",
             }}
           >
             {this._displayCheckBox3()}
@@ -270,11 +270,19 @@ class InformationMedicamentScreen extends React.Component {
             onPress={() => {
               this._ajoutMedicament(this.state.nomMed, this.state.troubleMed);
               this.props.navigation.navigate("ResultatCarte", {
-                nom: this.state.nomMed
+                nom: this.state.nomMed,
               });
             }}
           >
             <Bouton texte={"Enregistrer"}></Bouton>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.touchableOpacityStyle}
+            onPress={() => {
+              this.props.navigation.navigate("ChoixDesign");
+            }}
+          >
+            <Bouton texte={"Retour"}></Bouton>
           </TouchableOpacity>
         </View>
       </View>
@@ -287,7 +295,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   tuileStyle: {
     width: "90%",
@@ -296,12 +304,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 20,
-    borderRadius: 25
+    borderRadius: 25,
   },
   textStyle: {
     fontSize: 40,
     color: "#30696D",
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   textInputStyle: {
     backgroundColor: "white",
@@ -311,7 +319,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 20,
     shadowColor: "grey",
-    elevation: 10
+    elevation: 10,
   },
   numberInputStyle: {
     backgroundColor: "white",
@@ -321,7 +329,7 @@ const styles = StyleSheet.create({
     elevation: 10,
     borderRadius: 20,
     marginLeft: 10,
-    marginRight: 10
+    marginRight: 10,
   },
   pinkRoundStyle: {
     backgroundColor: "#CC3B95",
@@ -331,8 +339,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginLeft: 10,
-    marginRight: 10
-  }
+    marginRight: 10,
+  },
 });
 
 export default InformationMedicamentScreen;
