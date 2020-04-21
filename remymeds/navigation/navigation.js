@@ -13,13 +13,17 @@ import InformationMedicamentScreen from "../screens/InformationMedicamentScreen.
 import ChoixFormeScreen from "../screens/ChoixFormeScreen.js";
 import ChoixDesignScreen from "../screens/ChoixDesignScreen.js";
 import ResultatCarteScreen from "../screens/ResultatCarteScreen.js";
+import PosolitaireScreen from "../screens/PosolitaireScreen.js";
+import ReussiteJeuScreen from "../screens/ReussiteJeuScreen.js";
+import AccesOrdoScreen from "../screens/AccesOrdoScreen.js";
+import ReussitePosolitaireScreen from "../screens/ReussitePosolitaireScreen.js";
 
 const MedCreatorStack = createStackNavigator(
   {
     ChoixForme: ChoixFormeScreen,
     ChoixDesign: ChoixDesignScreen,
     InformationMedicament: InformationMedicamentScreen,
-    ResultatCarte: ResultatCarteScreen
+    ResultatCarte: ResultatCarteScreen,
   },
   { headerMode: "none" }
 );
@@ -27,7 +31,7 @@ const MedCreatorStack = createStackNavigator(
 const OrdonnanceStack = createStackNavigator(
   {
     Ordonnance: OrdonnanceScreen,
-    CreationMedicament: MedCreatorStack
+    CreationMedicament: MedCreatorStack,
   },
   { headerMode: "none" }
 );
@@ -38,7 +42,11 @@ const HomeStack = createStackNavigator(
     Ordonnance: OrdonnanceStack,
     Profil: ProfilScreen,
     Deconnexion: DeconnexionScreen,
-    Medmory: MedmoryScreen
+    Medmory: MedmoryScreen,
+    Posolitaire: PosolitaireScreen,
+    AccesOrdo: AccesOrdoScreen,
+    Reussite: ReussiteJeuScreen,
+    ReussitePosolitaire: ReussitePosolitaireScreen,
   },
   { headerMode: "none" }
 );
@@ -47,7 +55,7 @@ const ConnexionStack = createStackNavigator(
   {
     Connexion: ConnexionScreen,
     Inscription: InscriptionScreen,
-    Accueil: HomeStack
+    Accueil: HomeStack,
   },
   { headerMode: "none" }
 );

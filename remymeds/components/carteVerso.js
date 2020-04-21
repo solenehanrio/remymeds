@@ -21,7 +21,7 @@ export default class CarteVerso extends React.Component {
           marginBottom: this.props.hauteurCarte / 30,
           justifyContent: "space-between",
           marginLeft: this.props.hauteurCarte / 30,
-          marginRight: this.props.hauteurCarte / 30
+          marginRight: this.props.hauteurCarte / 30,
         }}
       >
         <View
@@ -31,7 +31,7 @@ export default class CarteVerso extends React.Component {
             width: this.props.hauteurCarte / 12,
             height: this.props.hauteurCarte / 12,
             marginTop: this.props.hauteurCarte / 60,
-            marginLeft: this.props.hauteurCarte / 60
+            marginLeft: this.props.hauteurCarte / 60,
           }}
         ></View>
 
@@ -39,7 +39,7 @@ export default class CarteVerso extends React.Component {
           style={{
             alignItems: "center",
             height: "80%",
-            width: "100%"
+            width: "100%",
           }}
         >
           <View
@@ -49,16 +49,16 @@ export default class CarteVerso extends React.Component {
               alignItems: "center",
               height: "30%",
               width: "70%",
-              borderRadius: this.props.hauteurCarte / 60
+              borderRadius: this.props.hauteurCarte / 60,
             }}
           >
             <Image
               style={{
                 height: this.props.hauteurCarte / 3 / 2,
-                resizeMode: "contain"
+                resizeMode: "contain",
               }}
               source={
-                tabImages.find(element => element.id == this.props.sourceIm)
+                tabImages.find((element) => element.id == this.props.sourceIm)
                   .source
               }
             ></Image>
@@ -70,7 +70,7 @@ export default class CarteVerso extends React.Component {
               fontWeight: "bold",
               color: "#703F00",
               textAlign: "center",
-              marginTop: this.props.hauteurCarte / 60
+              marginTop: this.props.hauteurCarte / 60,
             }}
           >
             {this.props.nomMedicament}
@@ -81,18 +81,26 @@ export default class CarteVerso extends React.Component {
               color: "#703F00",
               textAlign: "center",
               marginTop: this.props.hauteurCarte / 60,
-              marginBottom: this.props.hauteurCarte / 30
+              marginBottom: this.props.hauteurCarte / 30,
             }}
           >
             {this.props.trouble}
           </Text>
-
+          <Text
+            style={{
+              color: "#703F00",
+              fontSize: this.props.hauteurCarte / 20,
+              fontWeight: "bold",
+            }}
+          >
+            {this.props.jours}
+          </Text>
           <View
             style={{
               flexDirection: "row",
               alignItems: "center",
               justifyContent: "center",
-              marginBottom: this.props.hauteurCarte / 60
+              marginBottom: this.props.hauteurCarte / 60,
             }}
           >
             <Image
@@ -101,7 +109,7 @@ export default class CarteVerso extends React.Component {
                 width: this.props.hauteurCarte / 7,
                 resizeMode: "contain",
                 marginLeft: this.props.hauteurCarte / 120,
-                marginRight: this.props.hauteurCarte / 120
+                marginRight: this.props.hauteurCarte / 120,
               }}
               source={require("../includes/sunrise.png")}
             ></Image>
@@ -111,7 +119,7 @@ export default class CarteVerso extends React.Component {
                 width: this.props.hauteurCarte / 7,
                 resizeMode: "contain",
                 marginLeft: this.props.hauteurCarte / 120,
-                marginRight: this.props.hauteurCarte / 120
+                marginRight: this.props.hauteurCarte / 120,
               }}
               source={require("../includes/sun.png")}
             ></Image>
@@ -121,7 +129,7 @@ export default class CarteVerso extends React.Component {
                 width: this.props.hauteurCarte / 8,
                 resizeMode: "contain",
                 marginLeft: this.props.hauteurCarte / 120,
-                marginRight: this.props.hauteurCarte / 120
+                marginRight: this.props.hauteurCarte / 120,
               }}
               source={require("../includes/moon.png")}
             ></Image>
@@ -131,7 +139,7 @@ export default class CarteVerso extends React.Component {
             style={{
               flexDirection: "row",
               alignItems: "center",
-              justifyContent: "center"
+              justifyContent: "center",
             }}
           >
             <View
@@ -143,13 +151,13 @@ export default class CarteVerso extends React.Component {
                 marginLeft: this.props.hauteurCarte / 40,
                 marginRight: this.props.hauteurCarte / 40,
                 justifyContent: "center",
-                alignItems: "center"
+                alignItems: "center",
               }}
             >
               <Text
                 style={{
                   fontSize: this.props.hauteurCarte / 18,
-                  color: "#703F00"
+                  color: "#703F00",
                 }}
               >
                 {this.props.posoMatin}
@@ -164,13 +172,13 @@ export default class CarteVerso extends React.Component {
                 marginLeft: this.props.hauteurCarte / 40,
                 marginRight: this.props.hauteurCarte / 40,
                 justifyContent: "center",
-                alignItems: "center"
+                alignItems: "center",
               }}
             >
               <Text
                 style={{
                   fontSize: this.props.hauteurCarte / 18,
-                  color: "#703F00"
+                  color: "#703F00",
                 }}
               >
                 {this.props.posoMidi}
@@ -185,13 +193,13 @@ export default class CarteVerso extends React.Component {
                 marginLeft: this.props.hauteurCarte / 40,
                 marginRight: this.props.hauteurCarte / 40,
                 justifyContent: "center",
-                alignItems: "center"
+                alignItems: "center",
               }}
             >
               <Text
                 style={{
                   fontSize: this.props.hauteurCarte / 18,
-                  color: "#703F00"
+                  color: "#703F00",
                 }}
               >
                 {this.props.posoSoir}
@@ -207,7 +215,7 @@ export default class CarteVerso extends React.Component {
               width: this.props.hauteurCarte / 12,
               height: this.props.hauteurCarte / 12,
               marginBottom: this.props.hauteurCarte / 60,
-              marginRight: this.props.hauteurCarte / 60
+              marginRight: this.props.hauteurCarte / 60,
             }}
           ></View>
         </View>

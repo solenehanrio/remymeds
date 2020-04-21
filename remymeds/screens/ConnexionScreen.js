@@ -6,7 +6,7 @@ import {
   Button,
   Image,
   Dimensions,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import Bouton from "../components/boutons";
 import { TextInput } from "react-native-gesture-handler";
@@ -23,68 +23,44 @@ if (!firebase.apps.length) {
     storageBucket: "remymeds.appspot.com",
     messagingSenderId: "467972555435",
     appId: "1:467972555435:web:89042b2ccd7a5ec374adee",
-    measurementId: "G-Z6SZ5VZGX8"
+    measurementId: "G-Z6SZ5VZGX8",
   });
 }
 
 class ConnexionScreen extends React.Component {
-  static navigationOptions = {
-    title: "Connexion",
-    headerTitleStyle: { fontWeight: "bold" },
-    headerStyle: { justifyContent: "center", backgroundColor: "#CC3B95" },
-    headerLeft: (
-      <Image
-        style={{ width: 40, resizeMode: "contain" }}
-        source={require("../includes/logo_petit_V1.png")}
-      ></Image>
-    ),
-    headerTintColor: "white",
-    headerShown: true
-  };
-
   constructor(props) {
     super(props);
-    mdp = "";
-    email = "";
+    this.state = { mdp: "", email: "" };
   }
 
   _connexion(email, mdp) {
     firebase
       .auth()
       .signInWithEmailAndPassword(email, mdp)
-      .catch(function(error) {
+      .catch(function (error) {
         var errorCode = error.code;
         var errorMessage = firebase.auth.Error.message;
         alert(errorMessage);
         alert(errorCode);
       });
   }
-
-  _passagePageAccueil() {
-    if (firebase.auth().currentUser !== null) {
-      this.props.navigation.navigate("Accueil");
-    }
-  }
-  _deconnexion() {
-    if (firebase.auth().currentUser !== null) {
-      firebase
-        .auth()
-        .signOut()
-        .then(function() {
-          // Sign-out successful.
-        })
-        .catch(function(error) {
-          // An error happened.
-        });
-    }
+  async _user() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.props.navigation.navigate("Accueil");
+      }
+    });
   }
 
+  componentDidMount() {
+    this._user();
+  }
   render() {
     return (
       <View
         style={{
           alignItems: "center",
-          marginBottom: 10
+          marginBottom: 10,
         }}
       >
         <Image
@@ -93,19 +69,23 @@ class ConnexionScreen extends React.Component {
             width: 500,
             resizeMode: "contain",
             marginTop: 40,
-            marginBottom: 40
+            marginBottom: 40,
           }}
         ></Image>
 
         <View style={styles.tuile}>
           <TextInput
             style={styles.textInputStyle}
-            onEndEditing={text => (this.email = text.nativeEvent.text)}
+            onEndEditing={(text) =>
+              this.setState({ email: text.nativeEvent.text })
+            }
             placeholder="entrez votre adresse mail"
           ></TextInput>
           <TextInput
             style={styles.textInputStyle}
-            onEndEditing={text => (this.mdp = text.nativeEvent.text)}
+            onEndEditing={(text) =>
+              this.setState({ mdp: text.nativeEvent.text })
+            }
             placeholder="entrez votre mot de passe"
             secureTextEntry={true}
           ></TextInput>
@@ -113,7 +93,8 @@ class ConnexionScreen extends React.Component {
           <TouchableOpacity
             style={styles.touchableOpacityStyle}
             onPress={() => {
-              this._connexion(this.email, this.mdp), this._passagePageAccueil();
+              this._connexion(this.state.email, this.state.mdp),
+                this.props.navigation.navigate("Accueil");
             }}
           >
             <Bouton texte={"Se connecter"}></Bouton>
@@ -127,24 +108,6 @@ class ConnexionScreen extends React.Component {
         >
           <Bouton texte={"S'inscrire"}></Bouton>
         </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.touchableOpacityStyle}
-          onPress={() => {
-            this._deconnexion();
-          }}
-        >
-          <Bouton texte={"Se déconnecter"}></Bouton>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.touchableOpacityStyle}
-          onPress={() => {
-            this.props.navigation.navigate("Accueil");
-          }}
-        >
-          <Bouton texte={"Accès rapide"}></Bouton>
-        </TouchableOpacity>
       </View>
     );
   }
@@ -154,26 +117,26 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center"
+    alignItems: "center",
   },
   tuile: {
     backgroundColor: "#61C7CC",
     width: Dimensions.get("screen").width - 70,
     borderRadius: 20,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   textInputStyle: {
     marginTop: 30,
     backgroundColor: "white",
     width: Dimensions.get("screen").width - 150,
     borderRadius: 10,
-    fontSize: 35
+    fontSize: 35,
   },
   touchableOpacityStyle: {
     marginTop: 70,
-    marginBottom: 50
-  }
+    marginBottom: 50,
+  },
 });
 
 export default ConnexionScreen;

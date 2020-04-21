@@ -7,7 +7,7 @@ import {
   Button,
   Dimensions,
   TouchableOpacity,
-  Image
+  Image,
 } from "react-native";
 import * as firebase from "firebase/app";
 import Bouton from "../components/boutons";
@@ -23,7 +23,7 @@ if (!firebase.apps.length) {
     storageBucket: "remymeds.appspot.com",
     messagingSenderId: "467972555435",
     appId: "1:467972555435:web:89042b2ccd7a5ec374adee",
-    measurementId: "G-Z6SZ5VZGX8"
+    measurementId: "G-Z6SZ5VZGX8",
   });
 }
 
@@ -32,44 +32,57 @@ var database = firebase.database();
 class InscriptionScreen extends React.Component {
   constructor(props) {
     super(props);
-    email = "";
-    mdp = "";
-    prenom = "";
-    nom = "";
+    this.state = { mdp: "", email: "", prenom: "", nom: "", error: false };
   }
 
-  _inscription(email, mdp) {
-    firebase
+  async _inscription(email, mdp) {
+    await firebase
       .auth()
       .createUserWithEmailAndPassword(email, mdp)
-      .catch(function(error) {
+      .catch(function (error) {
         var errorCode = error.code;
         var errorMessage = error.message;
+
         // [START_EXCLUDE]
         if (errorCode == "auth/weak-password") {
           alert("The password is too weak.");
+          this.setState({ error: true });
         } else {
           alert(errorMessage);
+          this.setState({ error: true });
         }
         console.log(error);
         // [END_EXCLUDE]
       });
   }
 
-  _passagePageAccueil() {
-    if (firebase.auth().currentUser !== null) {
-      this.props.navigation.navigate("Accueil");
+  _navigation() {
+    if (this.state.error == false) {
+      this.props.navigation.navigate("Connexion");
     }
   }
-  _enregistrementDonnees(n, p) {
-    if (firebase.auth().currentUser !== null) {
-      var userId = firebase.auth().currentUser.uid;
-      firebase
-        .database()
-        .ref("users/" + userId)
-        .set({ nom: n, prenom: p });
-    }
+
+  async _donnees() {
+    await firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        console.log(user.uid);
+        this._save(user.uid);
+      }
+    });
   }
+
+  async _save(user) {
+    var userId = user;
+    firebase
+      .database()
+      .ref("/users/" + userId)
+      .set({
+        nom: this.state.nom,
+        prenom: this.state.prenom,
+        email: this.state.email,
+      });
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -77,8 +90,8 @@ class InscriptionScreen extends React.Component {
           <Text style={{ color: "#30696d", fontSize: 35 }}>Votre nom :*</Text>
           <TextInput
             style={styles.textInputStyle}
-            onSubmitEditing={text => {
-              this.nom = text.nativeEvent.text;
+            onSubmitEditing={(text) => {
+              this.state.nom = text.nativeEvent.text;
             }}
             placeholder="entrez votre nom"
           ></TextInput>
@@ -89,8 +102,8 @@ class InscriptionScreen extends React.Component {
           </Text>
           <TextInput
             style={styles.textInputStyle}
-            onSubmitEditing={text => {
-              this.prenom = text.nativeEvent.text;
+            onSubmitEditing={(text) => {
+              this.state.prenom = text.nativeEvent.text;
             }}
             placeholder="entrez votre prenom"
           ></TextInput>
@@ -101,8 +114,8 @@ class InscriptionScreen extends React.Component {
           </Text>
           <TextInput
             style={styles.textInputStyle}
-            onSubmitEditing={text => {
-              this.email = text.nativeEvent.text;
+            onSubmitEditing={(text) => {
+              this.state.email = text.nativeEvent.text;
             }}
             placeholder="entrez votre adresse mail"
           ></TextInput>
@@ -113,8 +126,8 @@ class InscriptionScreen extends React.Component {
           </Text>
           <TextInput
             style={styles.textInputStyle}
-            onSubmitEditing={text => {
-              this.mdp = text.nativeEvent.text;
+            onSubmitEditing={(text) => {
+              this.state.mdp = text.nativeEvent.text;
             }}
             placeholder="entrez un mot de passe"
             secureTextEntry={true}
@@ -123,9 +136,9 @@ class InscriptionScreen extends React.Component {
         <TouchableOpacity
           style={styles.touchableOpacityStyle}
           onPress={() => {
-            this._inscription(this.email, this.mdp),
-              this._enregistrementDonnees(this.nom, this.prenom),
-              this._passagePageAccueil();
+            this._inscription(this.state.email, this.state.mdp);
+            this._donnees();
+            this._navigation();
           }}
         >
           <Bouton texte={"M'inscrire"}></Bouton>
@@ -140,7 +153,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   tuile: {
     backgroundColor: "#61C7CC",
@@ -149,7 +162,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 50,
-    marginBottom: 50
+    marginBottom: 50,
   },
   textInputStyle: {
     marginTop: 30,
@@ -157,8 +170,8 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     width: Dimensions.get("screen").width - 150,
     borderRadius: 25,
-    fontSize: 35
-  }
+    fontSize: 35,
+  },
 });
 
 export default InscriptionScreen;

@@ -33,48 +33,118 @@ if (!firebase.apps.length) {
 class OrdonnanceScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { nomMedUser: [], tableau: [] };
+    this.state = {
+      nomMedUser: [],
+      tableauTest: [],
+      medASupprimer: "",
+      suppression: false,
+    };
   }
-  _recupererNoms() {
-    var userId = firebase.auth().currentUser.uid;
+  // fonction permettant de récupérer les id de design de chaque médicaments de l'utilisateur
+  // et de créer un tableau contenant les informations de chaque médicaments de l'utilisateur
+  async _recupererNoms() {
+    var userId = await firebase.auth().currentUser.uid;
     console.log(userId);
 
-    var refId = firebase.database().ref("/users/" + userId + "/medicament");
+    var refId = await firebase
+      .database()
+      .ref("/users/" + userId + "/medicament");
     let idDesignMed = [];
-    refId.on(
+    let nom = [];
+    let newTab = [];
+    idDesignMed = await refId.once(
       "value",
-      function (snapshot) {
+      (snapshot) => {
         idDesignMed = snapshot.val();
+        if (idDesignMed != null) {
+          idDesignMed = Object.entries(idDesignMed);
+          for (var i = 0; i < idDesignMed.length; i++) {
+            let stringJours = "";
+            let array = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"];
+            let tousLesJours = 0;
+            for (var j = 0; j < array.length; j++) {
+              for (var k = 0; k < idDesignMed[i][1].jours.length; k++) {
+                if (array[j] == idDesignMed[i][1].jours[k]) {
+                  stringJours = stringJours + array[j] + " ";
+                  tousLesJours = tousLesJours + 1;
+                }
+              }
+            }
+            if (tousLesJours == 7) {
+              stringJours = "Tous les jours";
+            }
+            const he = {
+              nom: idDesignMed[i][0],
+              idDesign: idDesignMed[i][1].idDesign,
+              posoMatin: idDesignMed[i][1].posoMatin,
+              posoMidi: idDesignMed[i][1].posoMidi,
+              posoSoir: idDesignMed[i][1].posoSoir,
+              jours: stringJours,
+              trouble: idDesignMed[i][1].trouble,
+            };
+            newTab.push(he);
+          }
+        }
+        return idDesignMed;
       },
       function (error) {}
     );
-
-    idDesignMed = Object.entries(idDesignMed);
-    let nom = [];
-    for (var i = 0; i < idDesignMed.length; i++) {
-      nom.push(idDesignMed[i][0]);
-    }
-    return idDesignMed;
+    await this.setState({ tableauTest: newTab });
+    console.log(this.state.tableauTest);
   }
 
-  _creationTableau() {
-    const tableauFirebase = this._recupererNoms();
-    const DataMed = [];
-    for (var i = 0; i < tableauFirebase.length; i++) {
-      const he = {
-        nom: tableauFirebase[i][0],
-        idDesign: tableauFirebase[i][1].idDesign,
-        posoMatin: tableauFirebase[i][1].posoMatin,
-        posoMidi: tableauFirebase[i][1].posoMidi,
-        posoSoir: tableauFirebase[i][1].posoSoir,
-      };
-      DataMed.push(he);
-    }
+  _suppressionMed() {
+    var userId = firebase.auth().currentUser.uid;
+    console.log(userId);
+    let nomMed = this.state.medASupprimer;
 
-    console.log(DataMed);
-    return DataMed;
+    firebase
+      .database()
+      .ref("/users/" + userId + "/medicament/" + nomMed)
+      .remove();
   }
 
+  _displaySuppr(nom) {
+    if (this.state.suppression == true) {
+      console.log("coucou");
+      return (
+        <TouchableOpacity
+          style={{ width: "100%" }}
+          onPress={() => {
+            this.setState({ medASupprimer: nom });
+          }}
+        >
+          <Bouton texte={"Supprimer"}></Bouton>
+        </TouchableOpacity>
+      );
+    }
+  }
+
+  _displayValiderSuppression() {
+    if (this.state.medASupprimer != "") {
+      return (
+        <TouchableOpacity
+          style={{
+            backgroundColor: "#CC3B95",
+            shadowColor: "grey",
+            width: "100%",
+            height: "10%",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          onPress={() => {
+            this._suppressionMed();
+            this.setState({ medASupprimer: "", suppression: false });
+            this._recupererNoms();
+          }}
+        >
+          <Text style={{ fontSize: 30, color: "#540039", fontWeight: "bold" }}>
+            Valider la suppresion de {this.state.medASupprimer}
+          </Text>
+        </TouchableOpacity>
+      );
+    }
+  }
   componentDidMount() {
     this._recupererNoms();
   }
@@ -87,20 +157,34 @@ class OrdonnanceScreen extends React.Component {
           optionBoutonDroit={2}
           titrePage={"ORDONNANCE"}
         ></Header>
-        <View style={{ alignItems: "center" }}>
+        <View
+          style={{
+            alignItems: "center",
+            flexDirection: "row",
+            justifyContent: "space-around",
+          }}
+        >
           <TouchableOpacity
-            style={{ width: "80%" }}
+            style={{ width: "40%" }}
             onPress={() => {
               this.props.navigation.navigate("CreationMedicament", {
                 retour: "faux",
               });
             }}
           >
-            <Bouton texte={"Créer un nouveau \n médicament"}></Bouton>
+            <Bouton texte={"Créer un \n médicament"}></Bouton>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{ width: "40%" }}
+            onPress={() => {
+              this.setState({ suppression: true });
+            }}
+          >
+            <Bouton texte={"Supprimer un \n médicament"}></Bouton>
           </TouchableOpacity>
         </View>
         <FlatList
-          data={this._creationTableau()}
+          data={this.state.tableauTest}
           renderItem={({ item }) => (
             <View
               style={{
@@ -110,12 +194,13 @@ class OrdonnanceScreen extends React.Component {
               }}
             >
               <CarteRecto
-                hauteurCarte={300}
+                hauteurCarte={400}
                 sourceIm={item.idDesign}
                 nomMedicament={item.nom}
               ></CarteRecto>
               <CarteVerso
-                hauteurCarte={300}
+                jours={item.jours}
+                hauteurCarte={400}
                 sourceIm={item.idDesign}
                 nomMedicament={item.nom}
                 trouble={item.trouble}
@@ -123,10 +208,23 @@ class OrdonnanceScreen extends React.Component {
                 posoMidi={item.posoMidi}
                 posoSoir={item.posoSoir}
               />
+              <View>{this._displaySuppr(item.nom)}</View>
             </View>
           )}
           keyExtractor={(item) => item.nom}
         />
+        <View
+          style={{
+            backgroundColor: "#CC3B95",
+            shadowColor: "grey",
+            elevation: -10,
+            width: "100%",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          {this._displayValiderSuppression()}
+        </View>
       </View>
     );
   }

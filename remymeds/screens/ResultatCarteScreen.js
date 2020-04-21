@@ -37,10 +37,6 @@ class ResultatCarteScreen extends React.Component {
     super(props);
     this.state = {
       idMedicament: "",
-      troubleMedicament: "",
-      posologieMatin: "",
-      posologieMidi: "",
-      posologieSoir: "",
     };
   }
 
@@ -150,6 +146,39 @@ class ResultatCarteScreen extends React.Component {
     );
     return posoSoirMed;
   }
+  _recupererJours() {
+    var userId = firebase.auth().currentUser.uid;
+    console.log(userId);
+    let nomMed = this.props.navigation.state.params.nom;
+
+    var refJours = firebase
+      .database()
+      .ref("/users/" + userId + "/medicament/" + nomMed + "/jours/");
+    let jours = [];
+    refJours.on(
+      "value",
+      function (snapshot) {
+        jours = snapshot.val();
+        let stringJours = "";
+        let array = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"];
+        let tousLesJours = 0;
+        for (var j = 0; j < array.length; j++) {
+          for (var k = 0; k < jours.length; k++) {
+            if (array[j] == jours[k]) {
+              stringJours = stringJours + array[j] + " ";
+              tousLesJours = tousLesJours + 1;
+            }
+          }
+        }
+        if (tousLesJours == 7) {
+          stringJours = "Tous les jours";
+        }
+        jours = stringJours;
+      },
+      function (error) {}
+    );
+    return jours;
+  }
 
   render() {
     return (
@@ -169,6 +198,7 @@ class ResultatCarteScreen extends React.Component {
           posoMatin={this._recupererPosoMatin()}
           posoMidi={this._recupererPosoMidi()}
           posoSoir={this._recupererPosoSoir()}
+          jours={this._recupererJours()}
         ></CarteVerso>
 
         <View style={{ flexDirection: "row" }}>

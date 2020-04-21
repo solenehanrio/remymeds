@@ -12,18 +12,18 @@ class Header extends React.Component {
     {
       id: 1,
       texte: "Profil",
-      image: require("../includes/profil.png")
+      image: require("../includes/profil.png"),
     },
     {
       id: 2,
       texte: "Déconnexion",
-      image: require("../includes/EXIT.png")
+      image: require("../includes/EXIT.png"),
     },
     {
       id: 3,
       texte: "Accueil",
-      image: require("../includes/home.png")
-    }
+      image: require("../includes/home.png"),
+    },
   ];
 
   _naviguerBoutonDroit() {
@@ -53,7 +53,8 @@ class Header extends React.Component {
           height: "9%",
           width: "100%",
           flexDirection: "row",
-          justifyContent: "space-between"
+          justifyContent: "space-between",
+          marginTop: 20,
         }}
       >
         <TouchableOpacity
@@ -66,14 +67,14 @@ class Header extends React.Component {
             style={{ height: "60%", resizeMode: "contain", marginTop: 10 }}
             source={
               this.tabOptionBouton.find(
-                element => element.id == this.props.optionBoutonGauche
+                (element) => element.id == this.props.optionBoutonGauche
               ).image
             }
           ></Image>
           <Text style={{ fontSize: 20, color: "#540039", fontWeight: "bold" }}>
             {
               this.tabOptionBouton.find(
-                element => element.id == this.props.optionBoutonGauche
+                (element) => element.id == this.props.optionBoutonGauche
               ).texte
             }
           </Text>
@@ -89,14 +90,14 @@ class Header extends React.Component {
             style={{ height: "60%", resizeMode: "contain", marginTop: 10 }}
             source={
               this.tabOptionBouton.find(
-                element => element.id == this.props.optionBoutonDroit
+                (element) => element.id == this.props.optionBoutonDroit
               ).image
             }
           ></Image>
           <Text style={{ fontSize: 20, color: "#540039", fontWeight: "bold" }}>
             {
               this.tabOptionBouton.find(
-                element => element.id == this.props.optionBoutonDroit
+                (element) => element.id == this.props.optionBoutonDroit
               ).texte
             }
           </Text>
@@ -111,15 +112,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   textStyle: {
     fontSize: 40,
     fontWeight: "bold",
     color: "white",
     marginTop: 20,
-    textAlign: "center"
-  }
+    textAlign: "center",
+  },
 });
 
 export default withNavigation(Header);

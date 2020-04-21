@@ -6,6 +6,7 @@ import {
   Image,
   Dimensions,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import Bouton from "../components/boutons";
 import CarteRecto from "../components/carteRecto";
@@ -42,9 +43,13 @@ class InformationMedicamentScreen extends React.Component {
       numberMidi: 0,
       numberSoir: 0,
       horaires: new Array(),
+      jours: new Array(),
     };
   }
 
+  //ajoute le médicament à la base de données firebase
+  // en utilisant comme id le nom du médicament passé en paramètre et en ajoutant les informations saisies à la suite
+  // de l'id, le trouble est aussi passé en paramètre.
   _ajoutMedicament(nom, t) {
     if (firebase.auth().currentUser !== null) {
       var userId = firebase.auth().currentUser.uid;
@@ -59,20 +64,109 @@ class InformationMedicamentScreen extends React.Component {
           posoMidi: this.state.numberMidi,
           posoSoir: this.state.numberSoir,
           posoHoraire: this.state.horaires,
+          jours: this.state.jours,
         });
     }
   }
+  // permt d'ajouter l'horaire à la liste de posologie horaire ou de le supprimer s'il est déselectionné.
+  // suivant l'horaire, ajoute aussi +1 au nombre de la partie de la journée correspondante
   _horaire(h) {
     if (this.state.horaires.find((element) => element == h) != undefined) {
       let indexHoraire = this.state.horaires.indexOf(h);
       this.state.horaires.splice(indexHoraire, 1);
       this.setState({ horaires: this.state.horaires });
-      console.log("supprimé");
+
+      if (
+        h == "4h" ||
+        h == "5h" ||
+        h == "6h" ||
+        h == "7h" ||
+        h == "8h" ||
+        h == "9h" ||
+        h == "10h" ||
+        h == "11h"
+      ) {
+        this.state.numberMatin = this.state.numberMatin - 1;
+        this.setState({ numberMatin: this.state.numberMatin });
+      } else if (
+        h == "12h" ||
+        h == "13h" ||
+        h == "14h" ||
+        h == "15h" ||
+        h == "16h" ||
+        h == "17h" ||
+        h == "18h" ||
+        h == "19h"
+      ) {
+        this.state.numberMidi = this.state.numberMidi - 1;
+        this.setState({ numberMidi: this.state.numberMidi });
+      } else if (
+        h == "20h" ||
+        h == "21h" ||
+        h == "22h" ||
+        h == "23h" ||
+        h == "00h" ||
+        h == "1h" ||
+        h == "2h" ||
+        h == "3h"
+      ) {
+        this.state.numberSoir = this.state.numberSoir - 1;
+        this.setState({ numberSoir: this.state.numberSoir });
+      }
     } else {
       this.state.horaires.push(h);
       this.setState({ horaires: this.state.horaires });
+      if (
+        h == "4h" ||
+        h == "5h" ||
+        h == "6h" ||
+        h == "7h" ||
+        h == "8h" ||
+        h == "9h" ||
+        h == "10h" ||
+        h == "11h"
+      ) {
+        this.state.numberMatin = this.state.numberMatin + 1;
+        this.setState({ numberMatin: this.state.numberMatin });
+      } else if (
+        h == "12h" ||
+        h == "13h" ||
+        h == "14h" ||
+        h == "15h" ||
+        h == "16h" ||
+        h == "17h" ||
+        h == "18h" ||
+        h == "19h"
+      ) {
+        this.state.numberMidi = this.state.numberMidi + 1;
+        this.setState({ numberMidi: this.state.numberMidi });
+      } else if (
+        h == "20h" ||
+        h == "21h" ||
+        h == "22h" ||
+        h == "23h" ||
+        h == "00h" ||
+        h == "1h" ||
+        h == "2h" ||
+        h == "3h"
+      ) {
+        this.state.numberSoir = this.state.numberSoir + 1;
+        this.setState({ numberSoir: this.state.numberSoir });
+      }
     }
   }
+  // ajoute le jour en paramètre à la liste des jours de prise ou le supprime s'il est désélectionné
+  _jours(d) {
+    if (this.state.jours.find((element) => element == d) != undefined) {
+      let indexJour = this.state.jours.indexOf(d);
+      this.state.jours.splice(indexJour, 1);
+      this.setState({ jours: this.state.jours });
+    } else {
+      this.state.jours.push(d);
+      this.setState({ jours: this.state.jours });
+    }
+  }
+  // défini le style des checkbox d'horaire suivant s'il sont sélectionné ou désélectionné
   _checkBoxStyle(item) {
     if (this.state.horaires.find((element) => element == item) != undefined) {
       return {
@@ -102,6 +196,39 @@ class InformationMedicamentScreen extends React.Component {
       };
     }
   }
+  // même chose que le précédent mais pour les checkboxs de jours
+  _checkBoxDayStyle(item) {
+    console.log(this.state.jours);
+    if (this.state.jours.find((element) => element == item) != undefined) {
+      return {
+        backgroundColor: "black",
+        borderWidth: 1,
+        borderColor: "grey",
+        width: 60,
+        height: 60,
+        borderRadius: 15,
+        marginRight: 10,
+        marginLeft: 10,
+        shadowColor: "grey",
+        elevation: 10,
+      };
+    } else {
+      return {
+        backgroundColor: "white",
+        borderWidth: 1,
+        borderColor: "grey",
+        width: 60,
+        height: 60,
+        borderRadius: 15,
+        marginRight: 10,
+        marginLeft: 10,
+        shadowColor: "grey",
+        elevation: 10,
+      };
+    }
+  }
+  //affiche les chackbox du matin à l'aide de la fonction map, suivant la liste des
+  // différents horaire associés
   _displayCheckBox1() {
     const horairesTab = ["4h", "5h", "6h", "7h", "8h", "9h", "10h", "11h"];
     const row = horairesTab.map((item) => (
@@ -117,7 +244,8 @@ class InformationMedicamentScreen extends React.Component {
     ));
     return row;
   }
-
+  //affiche les chackbox du midi à l'aide de la fonction map, suivant la liste des
+  // différents horaire associés
   _displayCheckBox2() {
     const horairesTab = [
       "12h",
@@ -142,7 +270,36 @@ class InformationMedicamentScreen extends React.Component {
     ));
     return row;
   }
-
+  // vérifie si toutes les informations nécessaires ont été rentrées, si oui passe
+  // à la page suivante sinon envoie un pop up d'erreur explicatif
+  _verif() {
+    if (
+      this.state.jours == [] ||
+      (this.state.numberMatin == 0 &&
+        this.state.numberMidi == 0 &&
+        this.state.numberSoir == 0) ||
+      this.state.nomMed == ""
+    ) {
+      Alert.alert(
+        "Informations manquantes",
+        "Attention, vous n'avez pas complété tout le formulaire",
+        [
+          {
+            text: "Compléter les informations manquantes",
+            style: "cancel",
+          },
+        ],
+        { cancelable: false }
+      );
+    } else {
+      this._ajoutMedicament(this.state.nomMed, this.state.troubleMed);
+      this.props.navigation.navigate("ResultatCarte", {
+        nom: this.state.nomMed,
+      });
+    }
+  }
+  //affiche les chackbox du soir à l'aide de la fonction map, suivant la liste des
+  // différents horaire associés
   _displayCheckBox3() {
     const horairesTab = ["20h", "21h", "22h", "23h", "00h", "1h", "2h", "3h"];
     const row = horairesTab.map((item) => (
@@ -151,6 +308,23 @@ class InformationMedicamentScreen extends React.Component {
           style={this._checkBoxStyle(item)}
           onPress={() => {
             this._horaire(item);
+          }}
+        ></TouchableOpacity>
+        <Text style={{ fontSize: 25 }}>{item}</Text>
+      </View>
+    ));
+    return row;
+  }
+  //affiche les chackbox des jours à l'aide de la fonction map, suivant la liste des
+  // différents jours associés
+  _displayDays() {
+    const joursTab = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"];
+    const row = joursTab.map((item) => (
+      <View style={{ justifyContent: "center", alignItems: "center" }}>
+        <TouchableOpacity
+          style={this._checkBoxDayStyle(item)}
+          onPress={() => {
+            this._jours(item);
           }}
         ></TouchableOpacity>
         <Text style={{ fontSize: 25 }}>{item}</Text>
@@ -192,8 +366,17 @@ class InformationMedicamentScreen extends React.Component {
             textAlign: "center",
           }}
         >
-          Entrez le nombre de cachets par prises et cochez les horaires de prise
+          Cochez les jours et les horaires de prise
         </Text>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          {this._displayDays()}
+        </View>
         <View style={{ flexDirection: "row", marginTop: 10, marginBottom: 10 }}>
           <View style={styles.pinkRoundStyle}>
             <Image
@@ -201,12 +384,6 @@ class InformationMedicamentScreen extends React.Component {
               source={require("../includes/MATIN.png")}
             ></Image>
           </View>
-          <TextInput
-            style={styles.numberInputStyle}
-            onEndEditing={(text) =>
-              this.setState({ numberMatin: text.nativeEvent.text })
-            }
-          ></TextInput>
           <View
             style={{
               flexDirection: "row",
@@ -224,12 +401,6 @@ class InformationMedicamentScreen extends React.Component {
               source={require("../includes/MIDI.png")}
             ></Image>
           </View>
-          <TextInput
-            style={styles.numberInputStyle}
-            onEndEditing={(text) =>
-              this.setState({ numberMidi: text.nativeEvent.text })
-            }
-          ></TextInput>
           <View
             style={{
               flexDirection: "row",
@@ -247,12 +418,6 @@ class InformationMedicamentScreen extends React.Component {
               source={require("../includes/SOIR.png")}
             ></Image>
           </View>
-          <TextInput
-            style={styles.numberInputStyle}
-            onEndEditing={(text) =>
-              this.setState({ numberSoir: text.nativeEvent.text })
-            }
-          ></TextInput>
           <View
             style={{
               flexDirection: "row",
@@ -264,25 +429,22 @@ class InformationMedicamentScreen extends React.Component {
           </View>
         </View>
 
-        <View>
+        <View style={{ flexDirection: "row" }}>
           <TouchableOpacity
-            style={styles.touchableOpacityStyle}
-            onPress={() => {
-              this._ajoutMedicament(this.state.nomMed, this.state.troubleMed);
-              this.props.navigation.navigate("ResultatCarte", {
-                nom: this.state.nomMed,
-              });
-            }}
-          >
-            <Bouton texte={"Enregistrer"}></Bouton>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.touchableOpacityStyle}
+            style={{ marginRight: 15 }}
             onPress={() => {
               this.props.navigation.navigate("ChoixDesign");
             }}
           >
             <Bouton texte={"Retour"}></Bouton>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{ marginLeft: 15 }}
+            onPress={() => {
+              this._verif();
+            }}
+          >
+            <Bouton texte={"Enregistrer"}></Bouton>
           </TouchableOpacity>
         </View>
       </View>

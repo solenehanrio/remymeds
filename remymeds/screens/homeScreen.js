@@ -5,7 +5,7 @@ import {
   View,
   Image,
   Dimensions,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import Bouton from "../components/boutons";
 import * as firebase from "firebase/app";
@@ -22,42 +22,69 @@ if (!firebase.apps.length) {
     storageBucket: "remymeds.appspot.com",
     messagingSenderId: "467972555435",
     appId: "1:467972555435:web:89042b2ccd7a5ec374adee",
-    measurementId: "G-Z6SZ5VZGX8"
+    measurementId: "G-Z6SZ5VZGX8",
   });
 }
 
 class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
+    this.state = { medmory: 0, posolitaire: 0 };
   }
 
-  _afficherPrenom() {
-    if (firebase.auth().currentUser.uid !== null) {
-      var userId = firebase.auth().currentUser.uid;
-      console.log(userId);
-      var ref = firebase.database().ref("/users/" + userId + "/prenom/");
-      let prenom = "";
-      ref.on(
-        "value",
-        function(snapshot) {
-          prenom = snapshot.val();
-        },
-        function(error) {}
-      );
-      console.log(prenom);
-    } else {
-      console.log(firebase.auth().currentUser.uid);
-      return "";
-    }
+  async _recupererScoreMedmory() {
+    var userId = await firebase.auth().currentUser.uid;
+    console.log(userId);
+
+    var refId = await firebase
+      .database()
+      .ref("/users/" + userId + "/Medmory/score");
+    let score = "";
+    score = await refId.once(
+      "value",
+      (snapshot) => {
+        score = snapshot.val();
+      },
+      function (error) {}
+    );
+    const scoreString = JSON.stringify(score);
+    const unquoted = scoreString.replace('"', "");
+    const newUnquoted = unquoted.replace('"', "");
+    await this.setState({ medmory: newUnquoted });
   }
+
+  async _recupererScorePosolitaire() {
+    var userId = await firebase.auth().currentUser.uid;
+    console.log(userId);
+
+    var refId = await firebase
+      .database()
+      .ref("/users/" + userId + "/Posolitaire/score");
+    let score = "";
+    score = await refId.once(
+      "value",
+      (snapshot) => {
+        score = snapshot.val();
+      },
+      function (error) {}
+    );
+    const scoreString = JSON.stringify(score);
+    const unquoted = scoreString.replace('"', "");
+    const newUnquoted = unquoted.replace('"', "");
+    await this.setState({ posolitaire: newUnquoted });
+  }
+
+  async componentDidMount() {
+    await this._recupererScoreMedmory();
+    await this._recupererScorePosolitaire();
+  }
+
   render() {
-    console.log(firebase.auth().currentUser.uid);
-    this._afficherPrenom();
     return (
       <View
         style={{
           alignItems: "center",
-          marginBottom: 10
+          marginBottom: 10,
         }}
       >
         <Header
@@ -82,7 +109,7 @@ class HomeScreen extends React.Component {
               resizeMode: "contain",
               marginRight: 82,
               marginBottom: 0,
-              marginTop: 0
+              marginTop: 0,
             }}
             source={require("../includes/logo_MEDMORY.png")}
           ></Image>
@@ -92,7 +119,7 @@ class HomeScreen extends React.Component {
               height: 300,
               resizeMode: "contain",
               marginTop: 0,
-              marginBottom: 0
+              marginBottom: 0,
             }}
             source={require("../includes/logo_posolitaire.png")}
           ></Image>
@@ -100,7 +127,7 @@ class HomeScreen extends React.Component {
         <View
           style={{
             flexDirection: "row",
-            alignItems: "center"
+            alignItems: "center",
           }}
         >
           <TouchableOpacity
@@ -114,7 +141,7 @@ class HomeScreen extends React.Component {
           <TouchableOpacity
             style={styles.touchableOpacityStyle}
             onPress={() => {
-              this.props.navigation.navigate("Ordonnance");
+              this.props.navigation.navigate("Posolitaire");
             }}
           >
             <Bouton texte={"Jouer au \n Posolitaire"}></Bouton>
@@ -124,10 +151,6 @@ class HomeScreen extends React.Component {
         <View style={styles.tuile}>
           <Text style={styles.titreTuileStyle}>Statistiques</Text>
           <View style={{ flexDirection: "row" }}>
-            <View style={styles.cadreStatStyle}></View>
-            <View style={styles.cadreStatStyle}></View>
-          </View>
-          <View style={{ flexDirection: "row" }}>
             <View style={{ flexDirection: "row" }}>
               <Image
                 style={{
@@ -136,7 +159,7 @@ class HomeScreen extends React.Component {
                   resizeMode: "contain",
                   marginTop: 10,
                   marginBottom: 0,
-                  marginLeft: 10
+                  marginLeft: 10,
                 }}
                 source={require("../includes/trophy.png")}
               ></Image>
@@ -150,7 +173,7 @@ class HomeScreen extends React.Component {
                   resizeMode: "contain",
                   marginTop: 10,
                   marginLeft: 120,
-                  marginBottom: 0
+                  marginBottom: 0,
                 }}
                 source={require("../includes/trophy.png")}
               ></Image>
@@ -158,8 +181,14 @@ class HomeScreen extends React.Component {
             </View>
           </View>
           <View style={{ flexDirection: "row" }}>
-            <View style={styles.cadreScoreStyle}></View>
-            <View style={styles.cadreScoreStyle}></View>
+            <View style={styles.cadreScoreStyle}>
+              <Text style={styles.textTuileStyle}>{this.state.medmory}</Text>
+            </View>
+            <View style={styles.cadreScoreStyle}>
+              <Text style={styles.textTuileStyle}>
+                {this.state.posolitaire}
+              </Text>
+            </View>
           </View>
         </View>
       </View>
@@ -171,37 +200,37 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center"
+    alignItems: "center",
   },
   tuile: {
     backgroundColor: "#61C7CC",
     width: Dimensions.get("screen").width - 70,
     borderRadius: 20,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   textInputStyle: {
     marginTop: 30,
     backgroundColor: "white",
     width: Dimensions.get("screen").width - 150,
     borderRadius: 10,
-    fontSize: 35
+    fontSize: 35,
   },
   touchableOpacityStyle: {
     marginRight: 90,
-    marginLeft: 90
+    marginLeft: 90,
   },
   titreTuileStyle: {
     fontSize: 50,
     color: "#30696D",
-    marginTop: 10
+    marginTop: 10,
   },
   textTuileStyle: {
     fontSize: 30,
     color: "#30696D",
     marginLeft: 20,
     marginTop: 20,
-    marginRight: 10
+    marginRight: 10,
   },
   cadreStatStyle: {
     backgroundColor: "white",
@@ -209,18 +238,20 @@ const styles = StyleSheet.create({
     height: 200,
     marginRight: 50,
     marginLeft: 50,
-    borderRadius: 20
+    borderRadius: 20,
   },
   cadreScoreStyle: {
     backgroundColor: "white",
-    width: 100,
-    height: 100,
-    borderRadius: 50,
+    width: 150,
+    height: 150,
+    borderRadius: 75,
     marginLeft: 150,
     marginRight: 150,
     marginBottom: 30,
-    marginTop: 10
-  }
+    marginTop: 10,
+    alignItems: "center",
+    justifyContent: "center",
+  },
 });
 
 export default HomeScreen;
