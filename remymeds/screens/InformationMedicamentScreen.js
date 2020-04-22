@@ -157,7 +157,7 @@ class InformationMedicamentScreen extends React.Component {
   }
   // ajoute le jour en paramètre à la liste des jours de prise ou le supprime s'il est désélectionné
   _jours(d) {
-    if (this.state.jours.find((element) => element == d) != undefined) {
+    if (this.state.jours.find((element) => element == d) != null) {
       let indexJour = this.state.jours.indexOf(d);
       this.state.jours.splice(indexJour, 1);
       this.setState({ jours: this.state.jours });

@@ -163,10 +163,16 @@ class ResultatCarteScreen extends React.Component {
         let array = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"];
         let tousLesJours = 0;
         for (var j = 0; j < array.length; j++) {
-          for (var k = 0; k < jours.length; k++) {
-            if (array[j] == jours[k]) {
-              stringJours = stringJours + array[j] + " ";
-              tousLesJours = tousLesJours + 1;
+          console.log(jours);
+          if (jours == null) {
+            console.log("null");
+          } else {
+            console.log("pas null");
+            for (var k = 0; k < jours.length; k++) {
+              if (array[j] == jours[k]) {
+                stringJours = stringJours + array[j] + " ";
+                tousLesJours = tousLesJours + 1;
+              }
             }
           }
         }
@@ -213,8 +219,7 @@ class ResultatCarteScreen extends React.Component {
           <TouchableOpacity
             style={styles.touchableOpacityStyle}
             onPress={() => {
-              this._retourRemove(),
-                this.props.navigation.navigate("InformationMedicament");
+              this._retourRemove(), this.props.navigation.goBack();
             }}
           >
             <Bouton texte={"Retour"}></Bouton>

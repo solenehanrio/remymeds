@@ -77,6 +77,7 @@ class HomeScreen extends React.Component {
   async componentDidMount() {
     await this._recupererScoreMedmory();
     await this._recupererScorePosolitaire();
+    console.log(this.state.medmory);
   }
 
   render() {

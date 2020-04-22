@@ -62,6 +62,7 @@ class OrdonnanceScreen extends React.Component {
             let stringJours = "";
             let array = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"];
             let tousLesJours = 0;
+            console.log(idDesignMed[i][1].jours);
             for (var j = 0; j < array.length; j++) {
               for (var k = 0; k < idDesignMed[i][1].jours.length; k++) {
                 if (array[j] == idDesignMed[i][1].jours[k]) {

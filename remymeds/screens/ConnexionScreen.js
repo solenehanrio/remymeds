@@ -54,6 +54,7 @@ class ConnexionScreen extends React.Component {
 
   componentDidMount() {
     this._user();
+    console.ignoredYellowBox = ["Warning: Each", "Warning: Failed"];
   }
   render() {
     return (

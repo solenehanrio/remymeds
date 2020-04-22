@@ -5,7 +5,7 @@ import {
   View,
   Image,
   Dimensions,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import * as firebase from "firebase/app";
 import "firebase/auth";
@@ -25,7 +25,7 @@ if (!firebase.apps.length) {
     storageBucket: "remymeds.appspot.com",
     messagingSenderId: "467972555435",
     appId: "1:467972555435:web:89042b2ccd7a5ec374adee",
-    measurementId: "G-Z6SZ5VZGX8"
+    measurementId: "G-Z6SZ5VZGX8",
   });
 }
 
@@ -42,7 +42,7 @@ class ChoixDesignScreen extends React.Component {
     ) {
       return (
         <View>
-          <Text> Choisissez la couleur du Haut</Text>
+          <Text style={styles.textStyle}> Choisissez la couleur du Haut</Text>
           <View style={{ flexDirection: "row" }}>
             <TouchableOpacity
               style={{
@@ -51,7 +51,7 @@ class ChoixDesignScreen extends React.Component {
                 borderRadius: 32,
                 backgroundColor: "#E70707",
                 shadowColor: "grey",
-                elevation: 10
+                elevation: 10,
               }}
               onPress={() => {
                 this.setState({ couleurHaut: "rouge" });
@@ -64,7 +64,7 @@ class ChoixDesignScreen extends React.Component {
                 borderRadius: 32,
                 backgroundColor: "#FFB300",
                 shadowColor: "grey",
-                elevation: 10
+                elevation: 10,
               }}
               onPress={() => {
                 this.setState({ couleurHaut: "orange" });
@@ -77,7 +77,7 @@ class ChoixDesignScreen extends React.Component {
                 borderRadius: 32,
                 backgroundColor: "#F8FF00",
                 shadowColor: "grey",
-                elevation: 10
+                elevation: 10,
               }}
               onPress={() => {
                 this.setState({ couleurHaut: "jaune" });
@@ -90,7 +90,7 @@ class ChoixDesignScreen extends React.Component {
                 borderRadius: 32,
                 backgroundColor: "#20B900",
                 shadowColor: "grey",
-                elevation: 10
+                elevation: 10,
               }}
               onPress={() => {
                 this.setState({ couleurHaut: "vert" });
@@ -103,7 +103,7 @@ class ChoixDesignScreen extends React.Component {
                 borderRadius: 32,
                 backgroundColor: "#0088FF",
                 shadowColor: "grey",
-                elevation: 10
+                elevation: 10,
               }}
               onPress={() => {
                 this.setState({ couleurHaut: "bleu" });
@@ -116,7 +116,7 @@ class ChoixDesignScreen extends React.Component {
                 borderRadius: 32,
                 backgroundColor: "#4300FF",
                 shadowColor: "grey",
-                elevation: 10
+                elevation: 10,
               }}
               onPress={() => {
                 this.setState({ couleurHaut: "indigo" });
@@ -129,7 +129,7 @@ class ChoixDesignScreen extends React.Component {
                 borderRadius: 32,
                 backgroundColor: "#8B00FF",
                 shadowColor: "grey",
-                elevation: 10
+                elevation: 10,
               }}
               onPress={() => {
                 this.setState({ couleurHaut: "violet" });
@@ -142,7 +142,7 @@ class ChoixDesignScreen extends React.Component {
                 borderRadius: 32,
                 backgroundColor: "#FF00D8",
                 shadowColor: "grey",
-                elevation: 10
+                elevation: 10,
               }}
               onPress={() => {
                 this.setState({ couleurHaut: "rose" });
@@ -155,14 +155,14 @@ class ChoixDesignScreen extends React.Component {
                 borderRadius: 32,
                 backgroundColor: "white",
                 shadowColor: "grey",
-                elevation: 10
+                elevation: 10,
               }}
               onPress={() => {
                 this.setState({ couleurHaut: "blanc" });
               }}
             ></TouchableOpacity>
           </View>
-          <Text>Choisissez la couleur du Bas</Text>
+          <Text style={styles.textStyle}>Choisissez la couleur du Bas</Text>
           <View style={{ flexDirection: "row" }}>
             <TouchableOpacity
               style={{
@@ -171,7 +171,7 @@ class ChoixDesignScreen extends React.Component {
                 borderRadius: 32,
                 backgroundColor: "#E70707",
                 shadowColor: "grey",
-                elevation: 10
+                elevation: 10,
               }}
               onPress={() => {
                 this.setState({ couleurBas: "rouge" });
@@ -184,7 +184,7 @@ class ChoixDesignScreen extends React.Component {
                 borderRadius: 32,
                 backgroundColor: "#FFB300",
                 shadowColor: "grey",
-                elevation: 10
+                elevation: 10,
               }}
               onPress={() => {
                 this.setState({ couleurBas: "orange" });
@@ -197,7 +197,7 @@ class ChoixDesignScreen extends React.Component {
                 borderRadius: 32,
                 backgroundColor: "#F8FF00",
                 shadowColor: "grey",
-                elevation: 10
+                elevation: 10,
               }}
               onPress={() => {
                 this.setState({ couleurBas: "jaune" });
@@ -210,7 +210,7 @@ class ChoixDesignScreen extends React.Component {
                 borderRadius: 32,
                 backgroundColor: "#20B900",
                 shadowColor: "grey",
-                elevation: 10
+                elevation: 10,
               }}
               onPress={() => {
                 this.setState({ couleurBas: "vert" });
@@ -223,7 +223,7 @@ class ChoixDesignScreen extends React.Component {
                 borderRadius: 32,
                 backgroundColor: "#0088FF",
                 shadowColor: "grey",
-                elevation: 10
+                elevation: 10,
               }}
               onPress={() => {
                 this.setState({ couleurBas: "bleu" });
@@ -236,7 +236,7 @@ class ChoixDesignScreen extends React.Component {
                 borderRadius: 32,
                 backgroundColor: "#4300FF",
                 shadowColor: "grey",
-                elevation: 10
+                elevation: 10,
               }}
               onPress={() => {
                 this.setState({ couleurBas: "indigo" });
@@ -249,7 +249,7 @@ class ChoixDesignScreen extends React.Component {
                 borderRadius: 32,
                 backgroundColor: "#8B00FF",
                 shadowColor: "grey",
-                elevation: 10
+                elevation: 10,
               }}
               onPress={() => {
                 this.setState({ couleurBas: "violet" });
@@ -262,7 +262,7 @@ class ChoixDesignScreen extends React.Component {
                 borderRadius: 32,
                 backgroundColor: "#FF00D8",
                 shadowColor: "grey",
-                elevation: 10
+                elevation: 10,
               }}
               onPress={() => {
                 this.setState({ couleurBas: "rose" });
@@ -275,7 +275,7 @@ class ChoixDesignScreen extends React.Component {
                 borderRadius: 32,
                 backgroundColor: "white",
                 shadowColor: "grey",
-                elevation: 10
+                elevation: 10,
               }}
               onPress={() => {
                 this.setState({ couleurBas: "blanc" });
@@ -291,7 +291,7 @@ class ChoixDesignScreen extends React.Component {
     } else {
       return (
         <View>
-          <Text>Choisissez la couleur</Text>
+          <Text style={styles.textStyle}>Choisissez la couleur</Text>
           <View style={{ flexDirection: "row" }}>
             <TouchableOpacity
               style={{
@@ -300,7 +300,7 @@ class ChoixDesignScreen extends React.Component {
                 borderRadius: 32,
                 backgroundColor: "#E70707",
                 shadowColor: "grey",
-                elevation: 10
+                elevation: 10,
               }}
               onPress={() => {
                 this.setState({ couleurHaut: "rouge" });
@@ -313,7 +313,7 @@ class ChoixDesignScreen extends React.Component {
                 borderRadius: 32,
                 backgroundColor: "#FFB300",
                 shadowColor: "grey",
-                elevation: 10
+                elevation: 10,
               }}
               onPress={() => {
                 this.setState({ couleurHaut: "orange" });
@@ -326,7 +326,7 @@ class ChoixDesignScreen extends React.Component {
                 borderRadius: 32,
                 backgroundColor: "#F8FF00",
                 shadowColor: "grey",
-                elevation: 10
+                elevation: 10,
               }}
               onPress={() => {
                 this.setState({ couleurHaut: "jaune" });
@@ -339,7 +339,7 @@ class ChoixDesignScreen extends React.Component {
                 borderRadius: 32,
                 backgroundColor: "#20B900",
                 shadowColor: "grey",
-                elevation: 10
+                elevation: 10,
               }}
               onPress={() => {
                 this.setState({ couleurHaut: "vert" });
@@ -352,7 +352,7 @@ class ChoixDesignScreen extends React.Component {
                 borderRadius: 32,
                 backgroundColor: "#0088FF",
                 shadowColor: "grey",
-                elevation: 10
+                elevation: 10,
               }}
               onPress={() => {
                 this.setState({ couleurHaut: "bleu" });
@@ -365,7 +365,7 @@ class ChoixDesignScreen extends React.Component {
                 borderRadius: 32,
                 backgroundColor: "#4300FF",
                 shadowColor: "grey",
-                elevation: 10
+                elevation: 10,
               }}
               onPress={() => {
                 this.setState({ couleurHaut: "indigo" });
@@ -378,7 +378,7 @@ class ChoixDesignScreen extends React.Component {
                 borderRadius: 32,
                 backgroundColor: "#8B00FF",
                 shadowColor: "grey",
-                elevation: 10
+                elevation: 10,
               }}
               onPress={() => {
                 this.setState({ couleurHaut: "violet" });
@@ -391,7 +391,7 @@ class ChoixDesignScreen extends React.Component {
                 borderRadius: 32,
                 backgroundColor: "#FF00D8",
                 shadowColor: "grey",
-                elevation: 10
+                elevation: 10,
               }}
               onPress={() => {
                 this.setState({ couleurHaut: "rose" });
@@ -404,7 +404,7 @@ class ChoixDesignScreen extends React.Component {
                 borderRadius: 32,
                 backgroundColor: "white",
                 shadowColor: "grey",
-                elevation: 10
+                elevation: 10,
               }}
               onPress={() => {
                 this.setState({ couleurHaut: "blanc" });
@@ -418,7 +418,7 @@ class ChoixDesignScreen extends React.Component {
 
   _affichageDesignTableau() {
     medForme = tabImages.filter(
-      element => element.forme == this.props.navigation.state.params.forme
+      (element) => element.forme == this.props.navigation.state.params.forme
     );
     idImage = "";
     if (
@@ -429,7 +429,7 @@ class ChoixDesignScreen extends React.Component {
     ) {
       if (this.state.couleurHaut == "" && this.state.couleurBas == "") {
         medCouleurHaut = medForme.filter(
-          element => element.couleur1 == "blanc"
+          (element) => element.couleur1 == "blanc"
         );
 
         if (
@@ -437,7 +437,7 @@ class ChoixDesignScreen extends React.Component {
           this.props.navigation.state.params.forme == "gellule"
         ) {
           medCouleurBas = medCouleurHaut.filter(
-            element => element.couleur2 == "blanc"
+            (element) => element.couleur2 == "blanc"
           );
           idImage = medCouleurBas[0].id;
           return <AffichageImage sourceIm={idImage}></AffichageImage>;
@@ -447,14 +447,15 @@ class ChoixDesignScreen extends React.Component {
         }
       } else if (this.state.couleurBas == "" && this.state.couleurHaut !== "") {
         medCouleurHaut = medForme.filter(
-          element => element.couleur1 == this.state.couleurHaut
+          (element) => element.couleur1 == this.state.couleurHaut
         );
         if (
           this.props.navigation.state.params.forme == "suspensionBuvable " ||
           this.props.navigation.state.params.forme == "gellule"
         ) {
-          idImage = medCouleurHaut.find(element => element.couleur2 == "blanc")
-            .id;
+          idImage = medCouleurHaut.find(
+            (element) => element.couleur2 == "blanc"
+          ).id;
           return <AffichageImage sourceIm={idImage}></AffichageImage>;
         } else {
           idImage = medCouleurHaut[0].id;
@@ -463,17 +464,17 @@ class ChoixDesignScreen extends React.Component {
       } else if (this.state.couleurBas !== "") {
         if (this.state.couleurHaut == "") {
           medCouleurBas = medForme.filter(
-            element => element.couleur2 == this.state.couleurBas
+            (element) => element.couleur2 == this.state.couleurBas
           );
-          idImage = medCouleurBas.find(element => element.couleur1 == "blanc")
+          idImage = medCouleurBas.find((element) => element.couleur1 == "blanc")
             .id;
           return <AffichageImage sourceIm={idImage}></AffichageImage>;
         } else if (this.state.couleurHaut !== "") {
           medCouleurBas = medForme.filter(
-            element => element.couleur2 == this.state.couleurBas
+            (element) => element.couleur2 == this.state.couleurBas
           );
           medCouleurHaut = medCouleurBas.filter(
-            element => element.couleur1 == this.state.couleurHaut
+            (element) => element.couleur1 == this.state.couleurHaut
           );
           idImage = medCouleurHaut[0].id;
           return <AffichageImage sourceIm={idImage}></AffichageImage>;
@@ -504,17 +505,17 @@ class ChoixDesignScreen extends React.Component {
       if (this.state.couleurHaut == "") {
         console.log("couleur haut rien");
         medForme = tabImages.filter(
-          element => element.forme == this.props.navigation.state.params.forme
+          (element) => element.forme == this.props.navigation.state.params.forme
         );
         medCouleurHaut = medForme.filter(
-          element => element.couleur1 == "blanc"
+          (element) => element.couleur1 == "blanc"
         );
       } else {
         medForme = tabImages.filter(
-          element => element.forme == this.props.navigation.state.params.forme
+          (element) => element.forme == this.props.navigation.state.params.forme
         );
         medCouleurHaut = medForme.filter(
-          element => element.couleur1 == this.state.couleurHaut
+          (element) => element.couleur1 == this.state.couleurHaut
         );
       }
       if (
@@ -525,18 +526,18 @@ class ChoixDesignScreen extends React.Component {
         if (this.state.couleurBas == "") {
           console.log("couleur bas rien");
           medCouleurBas = medCouleurHaut.filter(
-            element => element.couleur2 == "blanc"
+            (element) => element.couleur2 == "blanc"
           );
         } else {
           console.log("couleur bas quelque chose");
           medCouleurBas = medCouleurHaut.filter(
-            element => element.couleur2 == this.state.couleurBas
+            (element) => element.couleur2 == this.state.couleurBas
           );
         }
       } else {
         console.log("pas gellule ou sachet");
         medCouleurBas = medCouleurHaut.filter(
-          element => element.couleur2 == this.state.couleurBas
+          (element) => element.couleur2 == this.state.couleurBas
         );
       }
 
@@ -544,7 +545,7 @@ class ChoixDesignScreen extends React.Component {
       this.setState({ idMedicament: idImage });
 
       this.props.navigation.navigate("InformationMedicament", {
-        idMed: idImage
+        idMed: idImage,
       });
     } else if (this.props.navigation.state.params.forme == "suppositoire") {
       this.props.navigation.navigate("InformationMedicament", { idMed: "sup" });
@@ -563,7 +564,7 @@ class ChoixDesignScreen extends React.Component {
         style={{
           alignItems: "center",
           flex: 1,
-          justifyContent: "space-between"
+          justifyContent: "space-between",
         }}
       >
         <View style={styles.visualiserStyle}>
@@ -584,7 +585,7 @@ class ChoixDesignScreen extends React.Component {
           style={{ marginTop: 50 }}
           onPress={() => {
             this.props.navigation.navigate("ChoixForme", {
-              retour: "vrai"
+              retour: "vrai",
             });
           }}
         >
@@ -599,7 +600,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   roundBoutons: {
     backgroundColor: "#F29B20",
@@ -609,13 +610,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     shadowColor: "grey",
-    elevation: 10
+    elevation: 10,
   },
   textStyle: {
     fontSize: 30,
     color: "#F29B20",
     fontWeight: "bold",
-    textAlign: "center"
+    textAlign: "center",
   },
   visualiserStyle: {
     borderColor: "#CC3B95",
@@ -628,7 +629,7 @@ const styles = StyleSheet.create({
     marginBottom: 40,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 20
-  }
+    marginTop: 20,
+  },
 });
 export default ChoixDesignScreen;
