@@ -481,7 +481,6 @@ class ChoixDesignScreen extends React.Component {
         }
       }
     } else if (this.props.navigation.state.params.forme == "suppositoire") {
-      console.log("ok");
       return <AffichageImage sourceIm="sup"></AffichageImage>;
     } else if (this.props.navigation.state.params.forme == "ovule") {
       return <AffichageImage sourceIm="ov"></AffichageImage>;
@@ -503,7 +502,6 @@ class ChoixDesignScreen extends React.Component {
       medCouleurHaut = [];
       medCouleurBas = [];
       if (this.state.couleurHaut == "") {
-        console.log("couleur haut rien");
         medForme = tabImages.filter(
           (element) => element.forme == this.props.navigation.state.params.forme
         );
@@ -522,20 +520,16 @@ class ChoixDesignScreen extends React.Component {
         this.props.navigation.state.params.forme == "gellule" ||
         this.props.navigation.state.params.forme == "suspensionBuvable"
       ) {
-        console.log("gellule ou sachet");
         if (this.state.couleurBas == "") {
-          console.log("couleur bas rien");
           medCouleurBas = medCouleurHaut.filter(
             (element) => element.couleur2 == "blanc"
           );
         } else {
-          console.log("couleur bas quelque chose");
           medCouleurBas = medCouleurHaut.filter(
             (element) => element.couleur2 == this.state.couleurBas
           );
         }
       } else {
-        console.log("pas gellule ou sachet");
         medCouleurBas = medCouleurHaut.filter(
           (element) => element.couleur2 == this.state.couleurBas
         );

@@ -34,7 +34,6 @@ class HomeScreen extends React.Component {
 
   async _recupererScoreMedmory() {
     var userId = await firebase.auth().currentUser.uid;
-    console.log(userId);
 
     var refId = await firebase
       .database()
@@ -55,8 +54,6 @@ class HomeScreen extends React.Component {
 
   async _recupererScorePosolitaire() {
     var userId = await firebase.auth().currentUser.uid;
-    console.log(userId);
-
     var refId = await firebase
       .database()
       .ref("/users/" + userId + "/Posolitaire/score");
@@ -77,7 +74,6 @@ class HomeScreen extends React.Component {
   async componentDidMount() {
     await this._recupererScoreMedmory();
     await this._recupererScorePosolitaire();
-    console.log(this.state.medmory);
   }
 
   render() {

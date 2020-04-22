@@ -44,7 +44,6 @@ class OrdonnanceScreen extends React.Component {
   // et de créer un tableau contenant les informations de chaque médicaments de l'utilisateur
   async _recupererNoms() {
     var userId = await firebase.auth().currentUser.uid;
-    console.log(userId);
 
     var refId = await firebase
       .database()
@@ -62,7 +61,6 @@ class OrdonnanceScreen extends React.Component {
             let stringJours = "";
             let array = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"];
             let tousLesJours = 0;
-            console.log(idDesignMed[i][1].jours);
             for (var j = 0; j < array.length; j++) {
               for (var k = 0; k < idDesignMed[i][1].jours.length; k++) {
                 if (array[j] == idDesignMed[i][1].jours[k]) {
@@ -91,12 +89,10 @@ class OrdonnanceScreen extends React.Component {
       function (error) {}
     );
     await this.setState({ tableauTest: newTab });
-    console.log(this.state.tableauTest);
   }
 
   _suppressionMed() {
     var userId = firebase.auth().currentUser.uid;
-    console.log(userId);
     let nomMed = this.state.medASupprimer;
 
     firebase
@@ -107,7 +103,6 @@ class OrdonnanceScreen extends React.Component {
 
   _displaySuppr(nom) {
     if (this.state.suppression == true) {
-      console.log("coucou");
       return (
         <TouchableOpacity
           style={{ width: "100%" }}

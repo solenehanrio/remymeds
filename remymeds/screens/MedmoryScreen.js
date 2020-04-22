@@ -49,7 +49,6 @@ class MedmoryScreen extends React.Component {
   // et de créer un tableau contenant les informations de chaque médicaments de l'utilisateur
   async _recupererNoms() {
     var userId = await firebase.auth().currentUser.uid;
-    console.log(userId);
 
     var refId = await firebase
       .database()
@@ -95,7 +94,6 @@ class MedmoryScreen extends React.Component {
       function (error) {}
     );
     await this.setState({ tableauTest: newTab });
-    console.log(this.state.tableauTest);
   }
 
   // fonction pour obtenir un nombre aléatoire
@@ -241,7 +239,6 @@ class MedmoryScreen extends React.Component {
         }
       }
     }
-    console.log(tabPaires);
     this.setState({ tableauDoubleUtilise: newTab });
     this.setState({ tableauPositionsPaires: tabPaires });
     this.setState({ tableauRV: tableauRectoVerso });

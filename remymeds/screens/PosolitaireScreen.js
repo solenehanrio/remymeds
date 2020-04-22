@@ -72,7 +72,6 @@ class PosolitaireScreen extends React.Component {
     for (let i = 0; i < this.state.tabSoir.length; i++) {
       tabMedPresentsJour.push(this.state.tabSoir[i]);
     }
-    console.log(tabMedPresentsJour);
     // boucle qui compte les points de la prise du médicament ou non le jour en cours
     if (tabMedPresentsJour != []) {
       for (let j = 0; j < tabMedPresentsJour.length; j++) {
@@ -202,10 +201,7 @@ class PosolitaireScreen extends React.Component {
   // permet d'ajouter le médicament sélectionné au tableau associé à la partie de la journée sélectionnée
   _fonctionMAJTab(partDay) {
     if (Object.keys(this.state.medSelected).length === 0) {
-      console.log("prout");
     } else {
-      console.log("coucou");
-      console.log(this.state.medSelected);
       if (partDay == "matin") {
         let tab = this.state.tabMatin;
         let nb = tab.length;
@@ -410,7 +406,6 @@ class PosolitaireScreen extends React.Component {
               style={{ justifyContent: "center" }}
               onPress={() => {
                 this.setState({ medSelected: item });
-                console.log(this.state.tabMatin);
               }}
             >
               {this._selectedCardStyle(item.nom, item.idDesign)}
@@ -579,7 +574,6 @@ class PosolitaireScreen extends React.Component {
               style={{ justifyContent: "center" }}
               onPress={() => {
                 this.setState({ medSelected: item });
-                console.log(this.state.tabMatin);
               }}
             >
               {this._selectedCardStyle(item.nom, item.idDesign)}
@@ -748,7 +742,6 @@ class PosolitaireScreen extends React.Component {
               style={{ justifyContent: "center" }}
               onPress={() => {
                 this.setState({ medSelected: item });
-                console.log(this.state.tabMatin);
               }}
             >
               {this._selectedCardStyle(item.nom, item.idDesign)}
@@ -917,7 +910,6 @@ class PosolitaireScreen extends React.Component {
               style={{ justifyContent: "center" }}
               onPress={() => {
                 this.setState({ medSelected: item });
-                console.log(this.state.tabMatin);
               }}
             >
               {this._selectedCardStyle(item.nom, item.idDesign)}
@@ -1086,7 +1078,6 @@ class PosolitaireScreen extends React.Component {
               style={{ justifyContent: "center" }}
               onPress={() => {
                 this.setState({ medSelected: item });
-                console.log(this.state.tabMatin);
               }}
             >
               {this._selectedCardStyle(item.nom, item.idDesign)}
@@ -1255,7 +1246,6 @@ class PosolitaireScreen extends React.Component {
               style={{ justifyContent: "center" }}
               onPress={() => {
                 this.setState({ medSelected: item });
-                console.log(this.state.tabMatin);
               }}
             >
               {this._selectedCardStyle(item.nom, item.idDesign)}
@@ -1424,7 +1414,6 @@ class PosolitaireScreen extends React.Component {
               style={{ justifyContent: "center" }}
               onPress={() => {
                 this.setState({ medSelected: item });
-                console.log(this.state.tabMatin);
               }}
             >
               {this._selectedCardStyle(item.nom, item.idDesign)}
@@ -1475,7 +1464,6 @@ class PosolitaireScreen extends React.Component {
   // récupération et création du tableau de médicament de l'utilisateur.
   async _recupererNoms() {
     var userId = await firebase.auth().currentUser.uid;
-    console.log(userId);
 
     var refId = await firebase
       .database()

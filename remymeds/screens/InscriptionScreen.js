@@ -51,7 +51,6 @@ class InscriptionScreen extends React.Component {
           alert(errorMessage);
           this.setState({ error: true });
         }
-        console.log(error);
         // [END_EXCLUDE]
       });
   }
@@ -65,7 +64,6 @@ class InscriptionScreen extends React.Component {
   async _donnees() {
     await firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        console.log(user.uid);
         this._save(user.uid);
       }
     });

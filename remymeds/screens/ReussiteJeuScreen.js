@@ -24,7 +24,6 @@ class ReussiteJeuScreen extends React.Component {
   }
   async _getMeilleurScore() {
     var userId = await firebase.auth().currentUser.uid;
-    console.log(userId);
 
     var refId = await firebase.database().ref("/users/" + userId + "/Medmory/");
     let meilleurScore = 0;
@@ -32,10 +31,7 @@ class ReussiteJeuScreen extends React.Component {
       "value",
       (snapshot) => {
         meilleurScore = snapshot.val();
-        console.log(meilleurScore);
-        console.log(this.props.navigation.state.params.points);
         if (meilleurScore < this.props.navigation.state.params.points) {
-          console.log("boucle");
           this.setState({ sup: true });
         }
       },

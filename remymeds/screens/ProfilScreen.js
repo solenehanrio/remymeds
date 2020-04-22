@@ -31,7 +31,6 @@ class ProfilScreen extends React.Component {
 
   async _recupererNom() {
     var userId = await firebase.auth().currentUser.uid;
-    console.log(userId);
 
     var refId = await firebase.database().ref("/users/" + userId + "/nom/");
     let name = "";
@@ -39,7 +38,6 @@ class ProfilScreen extends React.Component {
       "value",
       (snapshot) => {
         name = snapshot.val();
-        console.log(name);
       },
       function (error) {}
     );
@@ -51,7 +49,6 @@ class ProfilScreen extends React.Component {
 
   async _recupererPrenom() {
     var userId = await firebase.auth().currentUser.uid;
-    console.log(userId);
 
     var refId = await firebase.database().ref("/users/" + userId + "/prenom/");
     let surname = "";
@@ -70,7 +67,6 @@ class ProfilScreen extends React.Component {
 
   async _recupererEmail() {
     var userId = await firebase.auth().currentUser.uid;
-    console.log(userId);
 
     var refId = await firebase.database().ref("/users/" + userId + "/email/");
     let mail = "";
@@ -78,7 +74,6 @@ class ProfilScreen extends React.Component {
       "value",
       (snapshot) => {
         mail = snapshot.val();
-        console.log(mail);
       },
       function (error) {}
     );

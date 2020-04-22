@@ -46,7 +46,7 @@ class ConnexionScreen extends React.Component {
   }
   async _user() {
     firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
+      if (user != null) {
         this.props.navigation.navigate("Accueil");
       }
     });
@@ -94,8 +94,7 @@ class ConnexionScreen extends React.Component {
           <TouchableOpacity
             style={styles.touchableOpacityStyle}
             onPress={() => {
-              this._connexion(this.state.email, this.state.mdp),
-                this.props.navigation.navigate("Accueil");
+              this._connexion(this.state.email, this.state.mdp);
             }}
           >
             <Bouton texte={"Se connecter"}></Bouton>

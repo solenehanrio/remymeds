@@ -198,7 +198,6 @@ class InformationMedicamentScreen extends React.Component {
   }
   // même chose que le précédent mais pour les checkboxs de jours
   _checkBoxDayStyle(item) {
-    console.log(this.state.jours);
     if (this.state.jours.find((element) => element == item) != undefined) {
       return {
         backgroundColor: "black",
